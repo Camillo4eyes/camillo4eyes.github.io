@@ -638,10 +638,10 @@
         </div>
       </div>
       <p class="scholar-source">
-        📊 Metrics from
+        📊 Metrics and publications from
         <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
            target="_blank" rel="noopener">Google Scholar</a>,
-        updated daily. Publications list via Semantic Scholar API.
+        updated daily.
       </p>
 
       <!-- Dynamic publication list populated by JS -->
@@ -786,9 +786,8 @@
       }
     })();
 
-    /* ── Fetch Scholar stats + all publications from Semantic Scholar ── */
+    /* ── Fetch Scholar stats + top-3 publications ── */
     (async () => {
-      const S2_BASE      = 'https://api.semanticscholar.org/graph/v1';
       const SCHOLAR_URL  = 'https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en';
       const AUTHOR_NAME  = /quattrocchi/i;
 
@@ -798,32 +797,124 @@
         if (el) el.textContent = val;
       };
 
-      /* Build a single pub-card DOM element */
-      const buildCard = (paper) => {
-        const year    = paper.year  || '';
-        const venue   = paper.venue || '';
+      /* Build a pub-card from a scholar-data.json entry */
+      const buildCardFromLocal = (pub) => {
+        const year    = pub.year  || '';
+        const venue   = pub.venue || '';
         const isArXiv = !venue || /arxiv|preprint/i.test(venue);
-
-        /* Badge label: prefer "VENUE YEAR", fall back to "arXiv YEAR" */
         const badgeLabel = [venue || 'arXiv', year].filter(Boolean).join(' ');
 
-        const card    = document.createElement('div');
+        const card = document.createElement('div');
         card.className = 'pub-card';
 
-        /* Badge */
         const badge = document.createElement('span');
         badge.className = 'pub-badge' + (isArXiv ? ' preprint' : '');
         badge.textContent = badgeLabel;
 
-        /* Content wrapper */
         const content = document.createElement('div');
         content.className = 'pub-content';
 
-        /* Title */
+        const h3 = document.createElement('h3');
+        if (pub.scholar_url) {
+          const a = document.createElement('a');
+          a.href = pub.scholar_url;
+          a.target = '_blank'; a.rel = 'noopener';
+          a.textContent = pub.title || 'Untitled';
+          h3.appendChild(a);
+        } else {
+          h3.textContent = pub.title || 'Untitled';
+        }
+
+        const venueP = document.createElement('p');
+        venueP.className = 'venue';
+        venueP.textContent = [venue || 'arXiv preprint', year].filter(Boolean).join(', ');
+
+        const citeP = document.createElement('p');
+        citeP.className = 'pub-citation';
+        const count = pub.cited_by ?? '—';
+        const countStr = typeof count === 'number' ? count.toLocaleString() : count;
+        citeP.innerHTML = `🔖 Citations: <span>${countStr}</span>`;
+
+        content.appendChild(h3);
+        content.appendChild(venueP);
+        content.appendChild(citeP);
+
+        card.appendChild(badge);
+        card.appendChild(content);
+        return card;
+      };
+
+      /* Append a "View all publications" link to the container */
+      const appendViewAll = (container) => {
+        const p = document.createElement('p');
+        p.style.cssText = 'text-align:center;margin-top:1.5rem';
+        const a = document.createElement('a');
+        a.href = SCHOLAR_URL;
+        a.target = '_blank'; a.rel = 'noopener';
+        a.style.cssText = 'display:inline-block;padding:0.6rem 1.4rem;background:var(--accent);color:#fff;border-radius:0.5rem;text-decoration:none;font-weight:600';
+        a.textContent = '📚 View all publications on Google Scholar';
+        p.appendChild(a);
+        container.appendChild(p);
+      };
+
+      const pubList = document.getElementById('pub-list');
+
+      /* ── 1. Load metrics + publications from scholar-data.json ── */
+      let localPubs = null;
+      try {
+        const sdResp = await fetch('scholar-data.json');
+        if (sdResp.ok) {
+          const sd = await sdResp.json();
+          if (sd.citations !== null && sd.citations !== undefined)
+            setText('stat-citations', Number(sd.citations).toLocaleString());
+          if (sd.hindex !== null && sd.hindex !== undefined)
+            setText('stat-hindex', sd.hindex);
+          if (sd.i10index !== null && sd.i10index !== undefined)
+            setText('stat-i10index', sd.i10index);
+          if (sd.publications && Array.isArray(sd.publications)) {
+            setText('stat-papers', sd.publications.length);
+            localPubs = sd.publications;
+          }
+        }
+      } catch (_) { /* fall through to Semantic Scholar */ }
+
+      /* If scholar-data.json has publications, render top 3 by citations.
+         Uses field `cited_by` (scholar-data.json schema). Publications with
+         no citation data (null/undefined) are sorted below those with data. */
+      if (localPubs && localPubs.length > 0 && pubList) {
+        const top3 = [...localPubs]
+          .filter(p => p.cited_by != null)
+          .sort((a, b) => (b.cited_by || 0) - (a.cited_by || 0))
+          .slice(0, 3);
+        pubList.innerHTML = '';
+        top3.forEach(p => pubList.appendChild(buildCardFromLocal(p)));
+        appendViewAll(pubList);
+        return;
+      }
+
+      /* ── 2. Fallback: try Semantic Scholar for metrics + top-3 publications ── */
+      const S2_BASE = 'https://api.semanticscholar.org/graph/v1';
+
+      /* Build a pub-card from a Semantic Scholar paper object */
+      const buildCard = (paper) => {
+        const year    = paper.year  || '';
+        const venue   = paper.venue || '';
+        const isArXiv = !venue || /arxiv|preprint/i.test(venue);
+        const badgeLabel = [venue || 'arXiv', year].filter(Boolean).join(' ');
+
+        const card = document.createElement('div');
+        card.className = 'pub-card';
+
+        const badge = document.createElement('span');
+        badge.className = 'pub-badge' + (isArXiv ? ' preprint' : '');
+        badge.textContent = badgeLabel;
+
+        const content = document.createElement('div');
+        content.className = 'pub-content';
+
         const h3 = document.createElement('h3');
         h3.textContent = paper.title || 'Untitled';
 
-        /* Authors — bold "Quattrocchi" */
         const authorsP = document.createElement('p');
         authorsP.className = 'authors';
         const authorHtml = (paper.authors || []).map(a => {
@@ -834,24 +925,18 @@
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
-          return AUTHOR_NAME.test(raw)
-            ? `<strong>${safe}</strong>`
-            : safe;
+          return AUTHOR_NAME.test(raw) ? `<strong>${safe}</strong>` : safe;
         }).join(', ');
         authorsP.innerHTML = authorHtml;
 
-        /* Venue line */
         const venueP = document.createElement('p');
         venueP.className = 'venue';
         venueP.textContent = [venue || 'arXiv preprint', year].filter(Boolean).join(', ');
 
-        /* Links */
         const links = document.createElement('div');
         links.className = 'pub-links';
-
         const arxivId = paper.externalIds && paper.externalIds.ArXiv;
         const doi     = paper.externalIds && paper.externalIds.DOI;
-
         if (arxivId) {
           const a = document.createElement('a');
           a.className = 'pub-link paper';
@@ -868,7 +953,6 @@
           links.appendChild(a);
         }
 
-        /* Citation count */
         const citeP = document.createElement('p');
         citeP.className = 'pub-citation';
         const count = (paper.citationCount ?? '—');
@@ -886,31 +970,7 @@
         return card;
       };
 
-      const pubList = document.getElementById('pub-list');
-
-      /* ── 1. Try to load metrics from scholar-data.json (exact Google Scholar values) ── */
-      let scholarMetricsLoaded = false;
       try {
-        const sdResp = await fetch('scholar-data.json');
-        if (sdResp.ok) {
-          const sd = await sdResp.json();
-          if (sd.citations !== null && sd.citations !== undefined) {
-            setText('stat-citations', Number(sd.citations).toLocaleString());
-            scholarMetricsLoaded = true;
-          }
-          if (sd.hindex !== null && sd.hindex !== undefined)
-            setText('stat-hindex', sd.hindex);
-          if (sd.i10index !== null && sd.i10index !== undefined)
-            setText('stat-i10index', sd.i10index);
-          if (sd.publications && Array.isArray(sd.publications))
-            setText('stat-papers', sd.publications.length);
-        }
-      } catch (_) { /* will fall through to Semantic Scholar metrics */ }
-
-      /* ── 2. Always fetch publications from Semantic Scholar (full metadata) ── */
-      try {
-        /* Discover the author's Semantic Scholar ID via the ECCV 2024 paper (arXiv:2312.02638).
-           This is a stable, published paper that reliably contains the author name. */
         const seedResp = await fetch(
           `${S2_BASE}/paper/arXiv:2312.02638?fields=authors`
         );
@@ -923,23 +983,19 @@
         if (!authorEntry) throw new Error('author not found in seed paper');
         const authorId = authorEntry.authorId;
 
-        /* Fetch author metrics as fallback when scholar-data.json has no data yet */
-        if (!scholarMetricsLoaded) {
-          const authorResp = await fetch(
-            `${S2_BASE}/author/${authorId}?fields=citationCount,hIndex,paperCount`
-          );
-          if (authorResp.ok) {
-            const authorData = await authorResp.json();
-            if (authorData.citationCount !== undefined)
-              setText('stat-citations', authorData.citationCount.toLocaleString());
-            if (authorData.hIndex !== undefined)
-              setText('stat-hindex', authorData.hIndex);
-            if (authorData.paperCount !== undefined)
-              setText('stat-papers', authorData.paperCount);
-          }
+        const authorResp = await fetch(
+          `${S2_BASE}/author/${authorId}?fields=citationCount,hIndex,paperCount`
+        );
+        if (authorResp.ok) {
+          const authorData = await authorResp.json();
+          if (authorData.citationCount !== undefined)
+            setText('stat-citations', authorData.citationCount.toLocaleString());
+          if (authorData.hIndex !== undefined)
+            setText('stat-hindex', authorData.hIndex);
+          if (authorData.paperCount !== undefined)
+            setText('stat-papers', authorData.paperCount);
         }
 
-        /* Fetch ALL papers */
         const papersResp = await fetch(
           `${S2_BASE}/author/${authorId}/papers` +
           `?fields=title,year,venue,citationCount,externalIds,authors&limit=1000`
@@ -949,21 +1005,25 @@
 
         const papers = (papersData.data || [])
           .filter(p => p && p.title)
-          .sort((a, b) => (b.year || 0) - (a.year || 0));
+          /* Semantic Scholar uses `citationCount`; local data uses `cited_by` */
+          .sort((a, b) => (b.citationCount || 0) - (a.citationCount || 0))
+          .slice(0, 3);
 
         if (pubList) {
           pubList.innerHTML = '';
           if (papers.length === 0) {
             pubList.innerHTML =
-              '<p class="pub-loading">No publications found in Semantic Scholar.</p>';
+              '<p class="pub-loading">No publications found.</p>';
+            appendViewAll(pubList);
           } else {
             papers.forEach(p => pubList.appendChild(buildCard(p)));
+            appendViewAll(pubList);
           }
         }
 
       } catch (err) {
         console.warn('Scholar data: could not fetch —', err.message);
-        if (pubList && pubList.querySelector('.pub-loading')) {
+        if (pubList) {
           pubList.innerHTML =
             `<p class="pub-loading">Could not load publications. ` +
             `Please visit my <a href="${SCHOLAR_URL}" ` +
