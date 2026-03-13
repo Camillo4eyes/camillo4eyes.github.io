@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Camillo Quattrocchi</title>
+  <title>Camillo Quattrocchi — AI &amp; Computer Vision Researcher</title>
   <style>
     /* ── Reset & base ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,7 +39,7 @@
       height: 60px;
     }
     nav .brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; }
-    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
     nav a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
     nav a:hover { color: var(--accent); }
 
@@ -86,6 +86,74 @@
     .btn-scholar  { background: #4285f4; color: #fff; }
     .btn-orcid    { background: #a6ce39; color: #1a1a1a; }
 
+    /* ── Experience & Education ───────────────────────────────────── */
+    .timeline { list-style: none; position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: .4rem; bottom: .4rem;
+      width: 2px; background: var(--border);
+    }
+    .timeline li {
+      position: relative; margin-bottom: 2rem;
+    }
+    .timeline li::before {
+      content: ''; position: absolute; left: -1.9rem; top: .45rem;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .tl-header { display: flex; align-items: flex-start; gap: .8rem; flex-wrap: wrap; }
+    .tl-logo {
+      width: 44px; height: 44px; border-radius: 8px; object-fit: contain;
+      border: 1px solid var(--border); background: #fff; padding: 4px;
+      flex-shrink: 0;
+    }
+    .tl-body { flex: 1; }
+    .tl-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: .1rem; }
+    .tl-body .tl-org { font-size: .92rem; color: var(--accent); font-weight: 600; }
+    .tl-body .tl-meta { font-size: .82rem; color: var(--muted); margin-top: .15rem; }
+    .tl-body p { font-size: .9rem; color: var(--text); margin-top: .5rem; }
+
+    /* ── Skills ───────────────────────────────────────────────────── */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+    .skill-group h3 {
+      font-size: .85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--muted); margin-bottom: .7rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .skill-tag {
+      background: #eff6ff; color: var(--accent);
+      border: 1px solid #bfdbfe; border-radius: 999px;
+      padding: .2rem .75rem; font-size: .82rem; font-weight: 600;
+    }
+
+    /* ── Scholar Stats ────────────────────────────────────────────── */
+    .scholar-stats {
+      display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.8rem;
+      text-align: center; min-width: 130px; flex: 1;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .stat-card .stat-value {
+      font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1.1;
+    }
+    .stat-card .stat-label {
+      font-size: .8rem; color: var(--muted); margin-top: .3rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .stat-card .stat-note {
+      font-size: .72rem; color: var(--muted); margin-top: .25rem;
+    }
+    .scholar-source {
+      font-size: .8rem; color: var(--muted); margin-top: -.8rem; margin-bottom: 1.5rem;
+    }
+    .scholar-source a { color: var(--accent); }
+
     /* ── Publications ─────────────────────────────────────────────── */
     .pub-card {
       background: var(--surface);
@@ -117,6 +185,12 @@
     .pub-link.paper:hover { background: var(--accent); color: #fff; }
     .pub-link.code    { border-color: #22c55e; color: #16a34a; }
     .pub-link.code:hover { background: #22c55e; color: #fff; }
+    .pub-citation {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .78rem; color: var(--muted); margin-top: .3rem;
+      font-weight: 600;
+    }
+    .pub-citation span { color: var(--accent); }
 
     /* ── Projects ─────────────────────────────────────────────────── */
     .projects-grid {
@@ -161,7 +235,8 @@
     @media (max-width: 600px) {
       .hero { flex-direction: column; text-align: center; }
       .social-links { justify-content: center; }
-      nav ul { gap: 1rem; }
+      nav ul { gap: .8rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -173,6 +248,8 @@
       <a class="brand" href="#about">CQ</a>
       <ul>
         <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -191,18 +268,21 @@
         />
         <div class="hero-info">
           <h1>Camillo Quattrocchi</h1>
-          <p class="tagline">AI &amp; Computer Vision Researcher</p>
-          <p class="location">📍 Catania, Italy &nbsp;·&nbsp; FPV-IPLab, University of Catania</p>
+          <p class="tagline">AI &amp; Computer Vision Researcher · Ph.D. Student</p>
+          <p class="location">📍 Catania, Sicily, Italy &nbsp;·&nbsp; FPV-IPLab, University of Catania</p>
           <p class="bio">
-            I'm a researcher working at the intersection of computer vision and machine learning,
-            with a focus on egocentric video understanding and temporal action segmentation.
-            I am passionate about building intelligent systems that can perceive and reason
-            about the world through vision — from first-person cameras to autonomous AI agents.
+            I'm a Ph.D. student and researcher at the <strong>Image Processing Laboratory (IPLab)</strong>,
+            University of Catania, working within the <strong>First Person Vision (FPV)</strong> group
+            led by Prof. Giovanni Maria Farinella. My research sits at the intersection of computer vision
+            and machine learning, with a primary focus on <em>egocentric video understanding</em> and
+            <em>temporal action segmentation</em>. I'm passionate about building intelligent systems
+            that perceive and reason about the world through vision — from first-person cameras to
+            autonomous AI agents — and I regularly explore applied LLM engineering and
+            retrieval-augmented generation in side projects.
           </p>
           <div class="social-links">
             <a class="social-btn btn-github"
                href="https://github.com/Camillo4eyes" target="_blank" rel="noopener">
-              <!-- GitHub icon -->
               <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor">
                 <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
                   0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
@@ -217,7 +297,6 @@
             </a>
             <a class="social-btn btn-linkedin"
                href="https://www.linkedin.com/in/cquattrocchi" target="_blank" rel="noopener">
-              <!-- LinkedIn icon -->
               <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
                   0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
@@ -232,7 +311,6 @@
             <a class="social-btn btn-scholar"
                href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
                target="_blank" rel="noopener">
-              <!-- Scholar icon (mortarboard) -->
               <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
                 <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4
                   L12 17l-7-3.82z"/>
@@ -257,15 +335,178 @@
     </div>
   </section>
 
+  <!-- ── Experience & Education ── -->
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">💼 Experience &amp; Education</h2>
+      <ul class="timeline">
+
+        <li>
+          <div class="tl-header">
+            <div class="tl-body">
+              <h3>Ph.D. Researcher — Computer Vision &amp; AI</h3>
+              <div class="tl-org">FPV-IPLab · University of Catania</div>
+              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; 2022 – present</div>
+              <p>
+                Conducting research on egocentric video understanding and temporal action segmentation
+                under the supervision of Prof. Giovanni Maria Farinella. Developed a novel
+                exocentric-to-egocentric knowledge transfer method (ECCV 2024) using synchronized
+                video pairs. Research is partly funded by the Italian national programme
+                <em>Future Artificial Intelligence Research (FAIR) – PNRR MUR</em>.
+              </p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="tl-header">
+            <div class="tl-body">
+              <h3>Research Collaborator</h3>
+              <div class="tl-org">IPLab · University of Catania</div>
+              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; 2021 – 2022</div>
+              <p>
+                Collaborated on computer vision research projects within the Image Processing Laboratory,
+                contributing to dataset preparation, model training, and evaluation pipelines
+                for first-person vision tasks.
+              </p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="tl-header">
+            <div class="tl-body">
+              <h3>M.Sc. in Computer Science</h3>
+              <div class="tl-org">University of Catania — Dipartimento di Matematica e Informatica</div>
+              <div class="tl-meta">📍 Catania, Italy</div>
+              <p>
+                Graduated with a focus on machine learning and computer vision.
+                Thesis research in the area of deep learning for video understanding.
+              </p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="tl-header">
+            <div class="tl-body">
+              <h3>B.Sc. in Computer Science</h3>
+              <div class="tl-org">University of Catania — Dipartimento di Matematica e Informatica</div>
+              <div class="tl-meta">📍 Catania, Italy</div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">🛠️ Skills</h2>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Bash</span>
+            <span class="skill-tag">SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Computer Vision &amp; ML</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">OpenCV</span>
+            <span class="skill-tag">DINOv2</span>
+            <span class="skill-tag">Temporal Action Segmentation</span>
+            <span class="skill-tag">Egocentric Vision</span>
+            <span class="skill-tag">Transfer Learning</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>LLM &amp; RAG</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">LangChain</span>
+            <span class="skill-tag">OpenAI API</span>
+            <span class="skill-tag">Ollama</span>
+            <span class="skill-tag">ChromaDB</span>
+            <span class="skill-tag">FAISS</span>
+            <span class="skill-tag">RAG Pipelines</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Engineering</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">FastAPI</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Pytest</span>
+            <span class="skill-tag">GitHub Actions</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Data &amp; Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">Jupyter</span>
+            <span class="skill-tag">Matplotlib</span>
+            <span class="skill-tag">Google Colab</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Languages (spoken)</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Italian 🇮🇹 (native)</span>
+            <span class="skill-tag">English 🇬🇧 (professional)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ── Publications ── -->
   <section id="publications">
     <div class="container">
       <h2 class="section-title">📄 Publications</h2>
 
+      <!-- Scholar stats banner -->
+      <div class="scholar-stats" id="scholar-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-citations">—</div>
+          <div class="stat-label">Citations</div>
+          <div class="stat-note">total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-hindex">—</div>
+          <div class="stat-label">h-index</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-papers">—</div>
+          <div class="stat-label">Papers</div>
+        </div>
+      </div>
+      <p class="scholar-source">
+        📊 Stats fetched live from
+        <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
+           target="_blank" rel="noopener">Google Scholar</a>
+        via Semantic Scholar API.
+      </p>
+
+      <!-- Paper 1 -->
       <div class="pub-card">
         <span class="pub-badge">ECCV 2024</span>
         <div class="pub-content">
-          <h3 aria-label="Synchronization is All You Need: Exocentric-to-Egocentric Transfer for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs">
+          <h3>
             Synchronization is All You Need
             <span style="font-weight:400; display:block; font-size:.92em; color:var(--muted); margin-top:.1rem;">
               Exocentric-to-Egocentric Transfer for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs
@@ -287,11 +528,44 @@
               💻 Code
             </a>
           </div>
+          <p class="pub-citation" id="cite-eccv2024">
+            🔖 Citations: <span>—</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Paper 2 -->
+      <div class="pub-card">
+        <span class="pub-badge" style="background:#7c3aed;">arXiv 2026</span>
+        <div class="pub-content">
+          <h3>
+            ENIGMA-360: An Ego-Exo Dataset for Human Behavior Understanding in Industrial Scenarios
+          </h3>
+          <p class="authors">
+            Francesco Ragusa, Rosario Leonardi, Michele Mazzamuto, Daniele Di Mauro,
+            <strong>Camillo Quattrocchi</strong>, Alessandro Passanisi, Irene D'Ambra,
+            Antonino Furnari, Giovanni Maria Farinella
+          </p>
+          <p class="venue">arXiv preprint, 2026</p>
+          <div class="pub-links">
+            <a class="pub-link paper"
+               href="https://arxiv.org/abs/2603.09741" target="_blank" rel="noopener">
+              📄 Paper (arXiv)
+            </a>
+            <a class="pub-link code"
+               href="https://github.com/fpv-iplab/ENIGMA-360"
+               target="_blank" rel="noopener">
+              💻 Code / Data
+            </a>
+          </div>
+          <p class="pub-citation" id="cite-enigma360">
+            🔖 Citations: <span>—</span>
+          </p>
         </div>
       </div>
 
       <p style="color: var(--muted); font-size:.9rem; margin-top:.5rem;">
-        For a full list of publications, visit my
+        For the full list of publications, visit my
         <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
            target="_blank" rel="noopener" style="color:var(--accent)">Google Scholar profile</a>.
       </p>
@@ -321,9 +595,11 @@
            target="_blank" rel="noopener">
           <h3>rag-studio</h3>
           <p>🧠 A modular RAG (Retrieval-Augmented Generation) framework for building
-             production-ready retrieval-augmented pipelines.</p>
+             production-ready retrieval-augmented pipelines with multi-provider LLM support,
+             FastAPI REST interface, and Docker deployment.</p>
           <div class="proj-meta">
             <span><span class="lang-dot lang-python"></span> Python</span>
+            <span class="stars">⭐ 1</span>
           </div>
         </a>
 
@@ -349,6 +625,7 @@
       <h2 class="section-title">📬 Contact</h2>
       <p class="contact-intro">
         Feel free to reach out via LinkedIn or explore my work on GitHub and Google Scholar.
+        I'm always open to discussing research collaborations, AI projects, or interesting ideas.
       </p>
       <div class="social-links">
         <a class="social-btn btn-github"
@@ -406,6 +683,80 @@
   <footer>
     <p>© 2025 Camillo Quattrocchi · Built with ❤️ and hosted on GitHub Pages</p>
   </footer>
+
+  <script>
+    /* ── Fetch Scholar stats + per-paper citations from Semantic Scholar ── */
+    (async () => {
+      const S2_BASE = 'https://api.semanticscholar.org/graph/v1';
+      const ARXIV_IDS = {
+        'eccv2024':   'arXiv:2312.02638',
+        'enigma360':  'arXiv:2603.09741',
+      };
+
+      /* Helper: safely set text */
+      const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+      const setSpan = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) { const s = el.querySelector('span'); if (s) s.textContent = val; }
+      };
+
+      try {
+        /* 1 ── Fetch both papers to get citation counts */
+        const arxivEntries = Object.entries(ARXIV_IDS); // [[key, id], ...]
+        const papersResp = await fetch(
+          `${S2_BASE}/paper/batch?fields=citationCount,authors`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: arxivEntries.map(([, id]) => id) }),
+          }
+        );
+
+        if (!papersResp.ok) throw new Error('papers batch failed');
+        const papersData = await papersResp.json();
+
+        /* Map results back to our keys using the same index order */
+        const paperMap = {};
+        papersData.forEach((p, i) => { if (p) paperMap[arxivEntries[i][0]] = p; });
+
+        /* Show per-paper citations */
+        Object.entries(paperMap).forEach(([key, paper]) => {
+          if (paper.citationCount !== undefined) {
+            setSpan(`cite-${key}`, paper.citationCount.toLocaleString());
+          }
+        });
+
+        /* 2 ── Find Quattrocchi's author ID from the ECCV paper */
+        const eccvPaper = paperMap['eccv2024'];
+        if (!eccvPaper || !eccvPaper.authors) throw new Error('no authors');
+
+        const authorEntry = (eccvPaper.authors || []).find(
+          a => a.name && a.name.toLowerCase().includes('quattrocchi')
+        );
+        if (!authorEntry) throw new Error('author not found');
+
+        /* 3 ── Fetch author profile */
+        const authorResp = await fetch(
+          `${S2_BASE}/author/${authorEntry.authorId}?fields=citationCount,hIndex,paperCount`
+        );
+        const authorData = await authorResp.json();
+
+        if (authorData.citationCount !== undefined)
+          setText('stat-citations', authorData.citationCount.toLocaleString());
+        if (authorData.hIndex !== undefined)
+          setText('stat-hindex', authorData.hIndex);
+        if (authorData.paperCount !== undefined)
+          setText('stat-papers', authorData.paperCount);
+
+      } catch (err) {
+        console.warn('Scholar stats: could not fetch live data —', err.message);
+        /* Silently keep dashes — user can click the Scholar link */
+      }
+    })();
+  </script>
 
 </body>
 </html>
