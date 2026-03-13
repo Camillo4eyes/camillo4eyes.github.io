@@ -629,15 +629,19 @@
           <div class="stat-label">h-index</div>
         </div>
         <div class="stat-card">
+          <div class="stat-value" id="stat-i10index">—</div>
+          <div class="stat-label">i10-index</div>
+        </div>
+        <div class="stat-card">
           <div class="stat-value" id="stat-papers">—</div>
           <div class="stat-label">Papers</div>
         </div>
       </div>
       <p class="scholar-source">
-        📊 Stats &amp; publications fetched live from
+        📊 Metrics from
         <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
-           target="_blank" rel="noopener">Google Scholar</a>
-        via Semantic Scholar API.
+           target="_blank" rel="noopener">Google Scholar</a>,
+        updated daily. Publications list via Semantic Scholar API.
       </p>
 
       <!-- Dynamic publication list populated by JS -->
@@ -867,10 +871,9 @@
         /* Citation count */
         const citeP = document.createElement('p');
         citeP.className = 'pub-citation';
-        const count = (paper.citationCount !== undefined && paper.citationCount !== null)
-          ? paper.citationCount.toLocaleString()
-          : '—';
-        citeP.innerHTML = `🔖 Citations: <span>${count}</span>`;
+        const count = (paper.citationCount ?? '—');
+        const countStr = typeof count === 'number' ? count.toLocaleString() : count;
+        citeP.innerHTML = `🔖 Citations: <span>${countStr}</span>`;
 
         content.appendChild(h3);
         content.appendChild(authorsP);
@@ -885,8 +888,29 @@
 
       const pubList = document.getElementById('pub-list');
 
+      /* ── 1. Try to load metrics from scholar-data.json (exact Google Scholar values) ── */
+      let scholarMetricsLoaded = false;
       try {
-        /* 1 ── Find Quattrocchi's Semantic Scholar author ID via a known paper */
+        const sdResp = await fetch('scholar-data.json');
+        if (sdResp.ok) {
+          const sd = await sdResp.json();
+          if (sd.citations !== null && sd.citations !== undefined) {
+            setText('stat-citations', Number(sd.citations).toLocaleString());
+            scholarMetricsLoaded = true;
+          }
+          if (sd.hindex !== null && sd.hindex !== undefined)
+            setText('stat-hindex', sd.hindex);
+          if (sd.i10index !== null && sd.i10index !== undefined)
+            setText('stat-i10index', sd.i10index);
+          if (sd.publications && Array.isArray(sd.publications))
+            setText('stat-papers', sd.publications.length);
+        }
+      } catch (_) { /* will fall through to Semantic Scholar metrics */ }
+
+      /* ── 2. Always fetch publications from Semantic Scholar (full metadata) ── */
+      try {
+        /* Discover the author's Semantic Scholar ID via the ECCV 2024 paper (arXiv:2312.02638).
+           This is a stable, published paper that reliably contains the author name. */
         const seedResp = await fetch(
           `${S2_BASE}/paper/arXiv:2312.02638?fields=authors`
         );
@@ -899,21 +923,23 @@
         if (!authorEntry) throw new Error('author not found in seed paper');
         const authorId = authorEntry.authorId;
 
-        /* 2 ── Fetch author-level metrics */
-        const authorResp = await fetch(
-          `${S2_BASE}/author/${authorId}?fields=citationCount,hIndex,paperCount`
-        );
-        if (authorResp.ok) {
-          const authorData = await authorResp.json();
-          if (authorData.citationCount !== undefined)
-            setText('stat-citations', authorData.citationCount.toLocaleString());
-          if (authorData.hIndex !== undefined)
-            setText('stat-hindex', authorData.hIndex);
-          if (authorData.paperCount !== undefined)
-            setText('stat-papers', authorData.paperCount);
+        /* Fetch author metrics as fallback when scholar-data.json has no data yet */
+        if (!scholarMetricsLoaded) {
+          const authorResp = await fetch(
+            `${S2_BASE}/author/${authorId}?fields=citationCount,hIndex,paperCount`
+          );
+          if (authorResp.ok) {
+            const authorData = await authorResp.json();
+            if (authorData.citationCount !== undefined)
+              setText('stat-citations', authorData.citationCount.toLocaleString());
+            if (authorData.hIndex !== undefined)
+              setText('stat-hindex', authorData.hIndex);
+            if (authorData.paperCount !== undefined)
+              setText('stat-papers', authorData.paperCount);
+          }
         }
 
-        /* 3 ── Fetch ALL papers for this author */
+        /* Fetch ALL papers */
         const papersResp = await fetch(
           `${S2_BASE}/author/${authorId}/papers` +
           `?fields=title,year,venue,citationCount,externalIds,authors&limit=1000`
@@ -922,10 +948,9 @@
         const papersData = await papersResp.json();
 
         const papers = (papersData.data || [])
-          .filter(p => p && p.title)                        /* drop nulls    */
-          .sort((a, b) => (b.year || 0) - (a.year || 0));  /* newest first  */
+          .filter(p => p && p.title)
+          .sort((a, b) => (b.year || 0) - (a.year || 0));
 
-        /* 4 ── Render */
         if (pubList) {
           pubList.innerHTML = '';
           if (papers.length === 0) {
@@ -938,7 +963,7 @@
 
       } catch (err) {
         console.warn('Scholar data: could not fetch —', err.message);
-        if (pubList) {
+        if (pubList && pubList.querySelector('.pub-loading')) {
           pubList.innerHTML =
             `<p class="pub-loading">Could not load publications. ` +
             `Please visit my <a href="${SCHOLAR_URL}" ` +
