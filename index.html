@@ -129,6 +129,31 @@
       padding: .2rem .75rem; font-size: .82rem; font-weight: 600;
     }
 
+    /* ── Scholar Stats ────────────────────────────────────────────── */
+    .scholar-stats {
+      display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.2rem 1.8rem;
+      text-align: center; min-width: 130px; flex: 1;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .stat-card .stat-value {
+      font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1.1;
+    }
+    .stat-card .stat-label {
+      font-size: .8rem; color: var(--muted); margin-top: .3rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .stat-card .stat-note {
+      font-size: .72rem; color: var(--muted); margin-top: .25rem;
+    }
+    .scholar-source {
+      font-size: .8rem; color: var(--muted); margin-top: -.8rem; margin-bottom: 1.5rem;
+    }
+    .scholar-source a { color: var(--accent); }
+
     /* ── Publications ─────────────────────────────────────────────── */
     .pub-card {
       background: var(--surface);
@@ -160,6 +185,12 @@
     .pub-link.paper:hover { background: var(--accent); color: #fff; }
     .pub-link.code    { border-color: #22c55e; color: #16a34a; }
     .pub-link.code:hover { background: #22c55e; color: #fff; }
+    .pub-citation {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .78rem; color: var(--muted); margin-top: .3rem;
+      font-weight: 600;
+    }
+    .pub-citation span { color: var(--accent); }
 
     /* ── Projects ─────────────────────────────────────────────────── */
     .projects-grid {
@@ -448,10 +479,34 @@
     <div class="container">
       <h2 class="section-title">📄 Publications</h2>
 
+      <!-- Scholar stats banner -->
+      <div class="scholar-stats" id="scholar-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-citations">—</div>
+          <div class="stat-label">Citations</div>
+          <div class="stat-note">total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-hindex">—</div>
+          <div class="stat-label">h-index</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-papers">—</div>
+          <div class="stat-label">Papers</div>
+        </div>
+      </div>
+      <p class="scholar-source">
+        📊 Stats fetched live from
+        <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
+           target="_blank" rel="noopener">Google Scholar</a>
+        via Semantic Scholar API.
+      </p>
+
+      <!-- Paper 1 -->
       <div class="pub-card">
         <span class="pub-badge">ECCV 2024</span>
         <div class="pub-content">
-          <h3 aria-label="Synchronization is All You Need: Exocentric-to-Egocentric Transfer for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs">
+          <h3>
             Synchronization is All You Need
             <span style="font-weight:400; display:block; font-size:.92em; color:var(--muted); margin-top:.1rem;">
               Exocentric-to-Egocentric Transfer for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs
@@ -473,11 +528,44 @@
               💻 Code
             </a>
           </div>
+          <p class="pub-citation" id="cite-eccv2024">
+            🔖 Citations: <span>—</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Paper 2 -->
+      <div class="pub-card">
+        <span class="pub-badge" style="background:#7c3aed;">arXiv 2026</span>
+        <div class="pub-content">
+          <h3>
+            ENIGMA-360: An Ego-Exo Dataset for Human Behavior Understanding in Industrial Scenarios
+          </h3>
+          <p class="authors">
+            Francesco Ragusa, Rosario Leonardi, Michele Mazzamuto, Daniele Di Mauro,
+            <strong>Camillo Quattrocchi</strong>, Alessandro Passanisi, Irene D'Ambra,
+            Antonino Furnari, Giovanni Maria Farinella
+          </p>
+          <p class="venue">arXiv preprint, 2026</p>
+          <div class="pub-links">
+            <a class="pub-link paper"
+               href="https://arxiv.org/abs/2603.09741" target="_blank" rel="noopener">
+              📄 Paper (arXiv)
+            </a>
+            <a class="pub-link code"
+               href="https://github.com/fpv-iplab/ENIGMA-360"
+               target="_blank" rel="noopener">
+              💻 Code / Data
+            </a>
+          </div>
+          <p class="pub-citation" id="cite-enigma360">
+            🔖 Citations: <span>—</span>
+          </p>
         </div>
       </div>
 
       <p style="color: var(--muted); font-size:.9rem; margin-top:.5rem;">
-        For a full list of publications, visit my
+        For the full list of publications, visit my
         <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
            target="_blank" rel="noopener" style="color:var(--accent)">Google Scholar profile</a>.
       </p>
@@ -595,6 +683,80 @@
   <footer>
     <p>© 2025 Camillo Quattrocchi · Built with ❤️ and hosted on GitHub Pages</p>
   </footer>
+
+  <script>
+    /* ── Fetch Scholar stats + per-paper citations from Semantic Scholar ── */
+    (async () => {
+      const S2_BASE = 'https://api.semanticscholar.org/graph/v1';
+      const ARXIV_IDS = {
+        'eccv2024':   'arXiv:2312.02638',
+        'enigma360':  'arXiv:2603.09741',
+      };
+
+      /* Helper: safely set text */
+      const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+      const setSpan = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) { const s = el.querySelector('span'); if (s) s.textContent = val; }
+      };
+
+      try {
+        /* 1 ── Fetch both papers to get citation counts */
+        const arxivEntries = Object.entries(ARXIV_IDS); // [[key, id], ...]
+        const papersResp = await fetch(
+          `${S2_BASE}/paper/batch?fields=citationCount,authors`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: arxivEntries.map(([, id]) => id) }),
+          }
+        );
+
+        if (!papersResp.ok) throw new Error('papers batch failed');
+        const papersData = await papersResp.json();
+
+        /* Map results back to our keys using the same index order */
+        const paperMap = {};
+        papersData.forEach((p, i) => { if (p) paperMap[arxivEntries[i][0]] = p; });
+
+        /* Show per-paper citations */
+        Object.entries(paperMap).forEach(([key, paper]) => {
+          if (paper.citationCount !== undefined) {
+            setSpan(`cite-${key}`, paper.citationCount.toLocaleString());
+          }
+        });
+
+        /* 2 ── Find Quattrocchi's author ID from the ECCV paper */
+        const eccvPaper = paperMap['eccv2024'];
+        if (!eccvPaper || !eccvPaper.authors) throw new Error('no authors');
+
+        const authorEntry = (eccvPaper.authors || []).find(
+          a => a.name && a.name.toLowerCase().includes('quattrocchi')
+        );
+        if (!authorEntry) throw new Error('author not found');
+
+        /* 3 ── Fetch author profile */
+        const authorResp = await fetch(
+          `${S2_BASE}/author/${authorEntry.authorId}?fields=citationCount,hIndex,paperCount`
+        );
+        const authorData = await authorResp.json();
+
+        if (authorData.citationCount !== undefined)
+          setText('stat-citations', authorData.citationCount.toLocaleString());
+        if (authorData.hIndex !== undefined)
+          setText('stat-hindex', authorData.hIndex);
+        if (authorData.paperCount !== undefined)
+          setText('stat-papers', authorData.paperCount);
+
+      } catch (err) {
+        console.warn('Scholar stats: could not fetch live data —', err.message);
+        /* Silently keep dashes — user can click the Scholar link */
+      }
+    })();
+  </script>
 
 </body>
 </html>
