@@ -378,7 +378,7 @@
             <div class="tl-body">
               <h3>M.Sc. in Computer Science</h3>
               <div class="tl-org">University of Catania — Dipartimento di Matematica e Informatica</div>
-              <div class="tl-meta">📍 Catania, Italy</div>
+              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; 2020 – 2022</div>
               <p>
                 Graduated with a focus on machine learning and computer vision.
                 Thesis research in the area of deep learning for video understanding.
@@ -392,7 +392,7 @@
             <div class="tl-body">
               <h3>B.Sc. in Computer Science</h3>
               <div class="tl-org">University of Catania — Dipartimento di Matematica e Informatica</div>
-              <div class="tl-meta">📍 Catania, Italy</div>
+              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; 2017 – 2020</div>
             </div>
           </div>
         </li>
@@ -448,6 +448,11 @@
             <span class="skill-tag">Git</span>
             <span class="skill-tag">Pytest</span>
             <span class="skill-tag">GitHub Actions</span>
+            <span class="skill-tag">Typer</span>
+            <span class="skill-tag">Pydantic</span>
+            <span class="skill-tag">Ruff</span>
+            <span class="skill-tag">mypy</span>
+            <span class="skill-tag">uvicorn</span>
           </div>
         </div>
 
@@ -459,6 +464,7 @@
             <span class="skill-tag">Jupyter</span>
             <span class="skill-tag">Matplotlib</span>
             <span class="skill-tag">Google Colab</span>
+            <span class="skill-tag">BeautifulSoup</span>
           </div>
         </div>
 
@@ -586,7 +592,7 @@
              narrative storytelling, and strategic player planning using LLM agents.</p>
           <div class="proj-meta">
             <span><span class="lang-dot lang-notebook"></span> Jupyter Notebook</span>
-            <span class="stars">⭐ 5</span>
+            <span class="stars" id="stars-lupus">⭐ 5</span>
           </div>
         </a>
 
@@ -599,7 +605,7 @@
              FastAPI REST interface, and Docker deployment.</p>
           <div class="proj-meta">
             <span><span class="lang-dot lang-python"></span> Python</span>
-            <span class="stars">⭐ 1</span>
+            <span class="stars" id="stars-rag">⭐ 1</span>
           </div>
         </a>
 
@@ -611,7 +617,7 @@
              Action Segmentation with Unlabeled Synchronized Video Pairs.</p>
           <div class="proj-meta">
             <span><span class="lang-dot lang-python"></span> Python</span>
-            <span class="stars">⭐ 8</span>
+            <span class="stars" id="stars-sync">⭐ 8</span>
           </div>
         </a>
 
@@ -685,6 +691,28 @@
   </footer>
 
   <script>
+    /* ── Fetch live GitHub star counts for project cards ── */
+    (async () => {
+      const GH_REPOS = [
+        { owner: 'Camillo4eyes', repo: 'LupusInFabula_Datapizza_AI', elemId: 'stars-lupus' },
+        { owner: 'Camillo4eyes', repo: 'rag-studio',                  elemId: 'stars-rag'  },
+        { owner: 'fpv-iplab',    repo: 'synchronization-is-all-you-need', elemId: 'stars-sync' },
+      ];
+      for (const { owner, repo, elemId } of GH_REPOS) {
+        try {
+          const resp = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+            headers: { Accept: 'application/vnd.github+json' },
+          });
+          if (!resp.ok) continue;
+          const data = await resp.json();
+          const el = document.getElementById(elemId);
+          if (el && data.stargazers_count !== undefined) {
+            el.textContent = `⭐ ${data.stargazers_count.toLocaleString()}`;
+          }
+        } catch { /* silently keep static fallback */ }
+      }
+    })();
+
     /* ── Fetch Scholar stats + per-paper citations from Semantic Scholar ── */
     (async () => {
       const S2_BASE = 'https://api.semanticscholar.org/graph/v1';
