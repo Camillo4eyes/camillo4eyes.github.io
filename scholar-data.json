@@ -1,8 +1,73 @@
 {
-  "fetched_at": "",
+  "fetched_at": "2026-03-13T10:40:27.442213+00:00",
   "author": "Camillo Quattrocchi",
-  "citations": null,
-  "hindex": null,
-  "i10index": null,
-  "publications": []
+  "citations": 71,
+  "hindex": 5,
+  "i10index": 3,
+  "publications": [
+    {
+      "title": "Exocentric-to-Egocentric Adaptation for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs: C. Quattrocchi et al.",
+      "year": "2026",
+      "venue": "",
+      "authors": "",
+      "cited_by": 0,
+      "scholar_url": ""
+    },
+    {
+      "title": "Synchronization is all you need: Exocentric-to-egocentric transfer for temporal action segmentation with unlabeled synchronized video pairs",
+      "year": "2025",
+      "venue": "",
+      "authors": "",
+      "cited_by": 21,
+      "scholar_url": ""
+    },
+    {
+      "title": "Bridging Domain Gaps in Industrial Domain: From Synthetic to Real and Exocentric to Egocentric Perspectives [Colmare le lacune nel dominio industriale: dalle prospettive …",
+      "year": "2025",
+      "venue": "",
+      "authors": "",
+      "cited_by": 0,
+      "scholar_url": ""
+    },
+    {
+      "title": "Put Your PPE on: A Tool for Synthetic Data Generation and Related Benchmark in Construction Site Scenarios.",
+      "year": "2023",
+      "venue": "",
+      "authors": "",
+      "cited_by": 10,
+      "scholar_url": ""
+    },
+    {
+      "title": "Panoptic segmentation in industrial environments using synthetic and real data",
+      "year": "2022",
+      "venue": "",
+      "authors": "",
+      "cited_by": 6,
+      "scholar_url": ""
+    },
+    {
+      "title": "Challenges in automatic Munsell color profiling for cultural heritage",
+      "year": "2020",
+      "venue": "",
+      "authors": "",
+      "cited_by": 28,
+      "scholar_url": ""
+    },
+    {
+      "title": "ARCA 2.0: Automatic Recognition of Color for Archaeology through a Web-Application",
+      "year": "2018",
+      "venue": "",
+      "authors": "",
+      "cited_by": 6,
+      "scholar_url": ""
+    },
+    {
+      "title": "Exocentric-to-Egocentric Adaptation for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs",
+      "year": "",
+      "venue": "",
+      "authors": "",
+      "cited_by": 0,
+      "scholar_url": ""
+    }
+  ]
 }
