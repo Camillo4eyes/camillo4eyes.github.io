@@ -1,0 +1,40 @@
+name: Update Scholar Data
+
+on:
+  schedule:
+    # Run every day at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:   # allow manual trigger from the Actions tab
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fetch_scholar.py'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install scholarly
+
+      - name: Fetch Google Scholar data
+        run: python scripts/fetch_scholar.py
+
+      - name: Commit updated scholar-data.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scholar-data.json
+          git diff --cached --quiet || git commit -m "chore: update scholar-data.json [skip ci]"
+          git push

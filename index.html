@@ -153,6 +153,11 @@
       font-size: .8rem; color: var(--muted); margin-top: -.8rem; margin-bottom: 1.5rem;
     }
     .scholar-source a { color: var(--accent); }
+    .pub-loading {
+      text-align: center; color: var(--muted); padding: 2rem;
+      font-size: .95rem;
+    }
+    .pub-badge.preprint { background: #7c3aed; }
 
     /* ── Publications ─────────────────────────────────────────────── */
     .pub-card {
@@ -624,84 +629,25 @@
           <div class="stat-label">h-index</div>
         </div>
         <div class="stat-card">
+          <div class="stat-value" id="stat-i10index">—</div>
+          <div class="stat-label">i10-index</div>
+        </div>
+        <div class="stat-card">
           <div class="stat-value" id="stat-papers">—</div>
           <div class="stat-label">Papers</div>
         </div>
       </div>
       <p class="scholar-source">
-        📊 Stats fetched live from
+        📊 Metrics from
         <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
-           target="_blank" rel="noopener">Google Scholar</a>
-        via Semantic Scholar API.
+           target="_blank" rel="noopener">Google Scholar</a>,
+        updated daily. Publications list via Semantic Scholar API.
       </p>
 
-      <!-- Paper 1 -->
-      <div class="pub-card">
-        <span class="pub-badge">ECCV 2024</span>
-        <div class="pub-content">
-          <h3>
-            Synchronization is All You Need
-            <span style="font-weight:400; display:block; font-size:.92em; color:var(--muted); margin-top:.1rem;">
-              Exocentric-to-Egocentric Transfer for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs
-            </span>
-          </h3>
-          <p class="authors">
-            <strong>Camillo Quattrocchi</strong>, Antonino Furnari, Daniele Di Mauro,
-            Mario Valerio Giuffrida, Giovanni Maria Farinella
-          </p>
-          <p class="venue">European Conference on Computer Vision (ECCV), 2024</p>
-          <div class="pub-links">
-            <a class="pub-link paper"
-               href="https://arxiv.org/abs/2312.02638" target="_blank" rel="noopener">
-              📄 Paper (arXiv)
-            </a>
-            <a class="pub-link code"
-               href="https://github.com/fpv-iplab/synchronization-is-all-you-need"
-               target="_blank" rel="noopener">
-              💻 Code
-            </a>
-          </div>
-          <p class="pub-citation" id="cite-eccv2024">
-            🔖 Citations: <span>—</span>
-          </p>
-        </div>
+      <!-- Dynamic publication list populated by JS -->
+      <div id="pub-list">
+        <p class="pub-loading">⏳ Loading publications…</p>
       </div>
-
-      <!-- Paper 2 -->
-      <div class="pub-card">
-        <span class="pub-badge" style="background:#7c3aed;">arXiv 2026</span>
-        <div class="pub-content">
-          <h3>
-            ENIGMA-360: An Ego-Exo Dataset for Human Behavior Understanding in Industrial Scenarios
-          </h3>
-          <p class="authors">
-            Francesco Ragusa, Rosario Leonardi, Michele Mazzamuto, Daniele Di Mauro,
-            <strong>Camillo Quattrocchi</strong>, Alessandro Passanisi, Irene D'Ambra,
-            Antonino Furnari, Giovanni Maria Farinella
-          </p>
-          <p class="venue">arXiv preprint, 2026</p>
-          <div class="pub-links">
-            <a class="pub-link paper"
-               href="https://arxiv.org/abs/2603.09741" target="_blank" rel="noopener">
-              📄 Paper (arXiv)
-            </a>
-            <a class="pub-link code"
-               href="https://github.com/fpv-iplab/ENIGMA-360"
-               target="_blank" rel="noopener">
-              💻 Code / Data
-            </a>
-          </div>
-          <p class="pub-citation" id="cite-enigma360">
-            🔖 Citations: <span>—</span>
-          </p>
-        </div>
-      </div>
-
-      <p style="color: var(--muted); font-size:.9rem; margin-top:.5rem;">
-        For the full list of publications, visit my
-        <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
-           target="_blank" rel="noopener" style="color:var(--accent)">Google Scholar profile</a>.
-      </p>
     </div>
   </section>
 
@@ -840,75 +786,190 @@
       }
     })();
 
-    /* ── Fetch Scholar stats + per-paper citations from Semantic Scholar ── */
+    /* ── Fetch Scholar stats + all publications from Semantic Scholar ── */
     (async () => {
-      const S2_BASE = 'https://api.semanticscholar.org/graph/v1';
-      const ARXIV_IDS = {
-        'eccv2024':   'arXiv:2312.02638',
-        'enigma360':  'arXiv:2603.09741',
-      };
+      const S2_BASE      = 'https://api.semanticscholar.org/graph/v1';
+      const SCHOLAR_URL  = 'https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en';
+      const AUTHOR_NAME  = /quattrocchi/i;
 
-      /* Helper: safely set text */
+      /* Helper: safely set element text */
       const setText = (id, val) => {
         const el = document.getElementById(id);
         if (el) el.textContent = val;
       };
-      const setSpan = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) { const s = el.querySelector('span'); if (s) s.textContent = val; }
+
+      /* Build a single pub-card DOM element */
+      const buildCard = (paper) => {
+        const year    = paper.year  || '';
+        const venue   = paper.venue || '';
+        const isArXiv = !venue || /arxiv|preprint/i.test(venue);
+
+        /* Badge label: prefer "VENUE YEAR", fall back to "arXiv YEAR" */
+        const badgeLabel = [venue || 'arXiv', year].filter(Boolean).join(' ');
+
+        const card    = document.createElement('div');
+        card.className = 'pub-card';
+
+        /* Badge */
+        const badge = document.createElement('span');
+        badge.className = 'pub-badge' + (isArXiv ? ' preprint' : '');
+        badge.textContent = badgeLabel;
+
+        /* Content wrapper */
+        const content = document.createElement('div');
+        content.className = 'pub-content';
+
+        /* Title */
+        const h3 = document.createElement('h3');
+        h3.textContent = paper.title || 'Untitled';
+
+        /* Authors — bold "Quattrocchi" */
+        const authorsP = document.createElement('p');
+        authorsP.className = 'authors';
+        const authorHtml = (paper.authors || []).map(a => {
+          const raw  = a.name || '';
+          const safe = raw
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+          return AUTHOR_NAME.test(raw)
+            ? `<strong>${safe}</strong>`
+            : safe;
+        }).join(', ');
+        authorsP.innerHTML = authorHtml;
+
+        /* Venue line */
+        const venueP = document.createElement('p');
+        venueP.className = 'venue';
+        venueP.textContent = [venue || 'arXiv preprint', year].filter(Boolean).join(', ');
+
+        /* Links */
+        const links = document.createElement('div');
+        links.className = 'pub-links';
+
+        const arxivId = paper.externalIds && paper.externalIds.ArXiv;
+        const doi     = paper.externalIds && paper.externalIds.DOI;
+
+        if (arxivId) {
+          const a = document.createElement('a');
+          a.className = 'pub-link paper';
+          a.href = `https://arxiv.org/abs/${arxivId}`;
+          a.target = '_blank'; a.rel = 'noopener';
+          a.textContent = '📄 Paper (arXiv)';
+          links.appendChild(a);
+        } else if (doi) {
+          const a = document.createElement('a');
+          a.className = 'pub-link paper';
+          a.href = `https://doi.org/${doi}`;
+          a.target = '_blank'; a.rel = 'noopener';
+          a.textContent = '📄 Paper (DOI)';
+          links.appendChild(a);
+        }
+
+        /* Citation count */
+        const citeP = document.createElement('p');
+        citeP.className = 'pub-citation';
+        const count = (paper.citationCount ?? '—');
+        const countStr = typeof count === 'number' ? count.toLocaleString() : count;
+        citeP.innerHTML = `🔖 Citations: <span>${countStr}</span>`;
+
+        content.appendChild(h3);
+        content.appendChild(authorsP);
+        content.appendChild(venueP);
+        if (links.children.length) content.appendChild(links);
+        content.appendChild(citeP);
+
+        card.appendChild(badge);
+        card.appendChild(content);
+        return card;
       };
 
-      try {
-        /* 1 ── Fetch both papers to get citation counts */
-        const arxivEntries = Object.entries(ARXIV_IDS); // [[key, id], ...]
-        const papersResp = await fetch(
-          `${S2_BASE}/paper/batch?fields=citationCount,authors`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ids: arxivEntries.map(([, id]) => id) }),
-          }
-        );
+      const pubList = document.getElementById('pub-list');
 
-        if (!papersResp.ok) throw new Error('papers batch failed');
+      /* ── 1. Try to load metrics from scholar-data.json (exact Google Scholar values) ── */
+      let scholarMetricsLoaded = false;
+      try {
+        const sdResp = await fetch('scholar-data.json');
+        if (sdResp.ok) {
+          const sd = await sdResp.json();
+          if (sd.citations !== null && sd.citations !== undefined) {
+            setText('stat-citations', Number(sd.citations).toLocaleString());
+            scholarMetricsLoaded = true;
+          }
+          if (sd.hindex !== null && sd.hindex !== undefined)
+            setText('stat-hindex', sd.hindex);
+          if (sd.i10index !== null && sd.i10index !== undefined)
+            setText('stat-i10index', sd.i10index);
+          if (sd.publications && Array.isArray(sd.publications))
+            setText('stat-papers', sd.publications.length);
+        }
+      } catch (_) { /* will fall through to Semantic Scholar metrics */ }
+
+      /* ── 2. Always fetch publications from Semantic Scholar (full metadata) ── */
+      try {
+        /* Discover the author's Semantic Scholar ID via the ECCV 2024 paper (arXiv:2312.02638).
+           This is a stable, published paper that reliably contains the author name. */
+        const seedResp = await fetch(
+          `${S2_BASE}/paper/arXiv:2312.02638?fields=authors`
+        );
+        if (!seedResp.ok) throw new Error('seed paper fetch failed');
+        const seedData = await seedResp.json();
+
+        const authorEntry = (seedData.authors || []).find(
+          a => a.name && AUTHOR_NAME.test(a.name)
+        );
+        if (!authorEntry) throw new Error('author not found in seed paper');
+        const authorId = authorEntry.authorId;
+
+        /* Fetch author metrics as fallback when scholar-data.json has no data yet */
+        if (!scholarMetricsLoaded) {
+          const authorResp = await fetch(
+            `${S2_BASE}/author/${authorId}?fields=citationCount,hIndex,paperCount`
+          );
+          if (authorResp.ok) {
+            const authorData = await authorResp.json();
+            if (authorData.citationCount !== undefined)
+              setText('stat-citations', authorData.citationCount.toLocaleString());
+            if (authorData.hIndex !== undefined)
+              setText('stat-hindex', authorData.hIndex);
+            if (authorData.paperCount !== undefined)
+              setText('stat-papers', authorData.paperCount);
+          }
+        }
+
+        /* Fetch ALL papers */
+        const papersResp = await fetch(
+          `${S2_BASE}/author/${authorId}/papers` +
+          `?fields=title,year,venue,citationCount,externalIds,authors&limit=1000`
+        );
+        if (!papersResp.ok) throw new Error('author papers fetch failed');
         const papersData = await papersResp.json();
 
-        /* Map results back to our keys using the same index order */
-        const paperMap = {};
-        papersData.forEach((p, i) => { if (p) paperMap[arxivEntries[i][0]] = p; });
+        const papers = (papersData.data || [])
+          .filter(p => p && p.title)
+          .sort((a, b) => (b.year || 0) - (a.year || 0));
 
-        /* Show per-paper citations */
-        Object.entries(paperMap).forEach(([key, paper]) => {
-          if (paper.citationCount !== undefined) {
-            setSpan(`cite-${key}`, paper.citationCount.toLocaleString());
+        if (pubList) {
+          pubList.innerHTML = '';
+          if (papers.length === 0) {
+            pubList.innerHTML =
+              '<p class="pub-loading">No publications found in Semantic Scholar.</p>';
+          } else {
+            papers.forEach(p => pubList.appendChild(buildCard(p)));
           }
-        });
-
-        /* 2 ── Find Quattrocchi's author ID from the ECCV paper */
-        const eccvPaper = paperMap['eccv2024'];
-        if (!eccvPaper || !eccvPaper.authors) throw new Error('no authors');
-
-        const authorEntry = (eccvPaper.authors || []).find(
-          a => a.name && a.name.toLowerCase().includes('quattrocchi')
-        );
-        if (!authorEntry) throw new Error('author not found');
-
-        /* 3 ── Fetch author profile */
-        const authorResp = await fetch(
-          `${S2_BASE}/author/${authorEntry.authorId}?fields=citationCount,hIndex,paperCount`
-        );
-        const authorData = await authorResp.json();
-
-        if (authorData.citationCount !== undefined)
-          setText('stat-citations', authorData.citationCount.toLocaleString());
-        if (authorData.hIndex !== undefined)
-          setText('stat-hindex', authorData.hIndex);
-        if (authorData.paperCount !== undefined)
-          setText('stat-papers', authorData.paperCount);
+        }
 
       } catch (err) {
-        console.warn('Scholar stats: could not fetch live data —', err.message);
-        /* Silently keep dashes — user can click the Scholar link */
+        console.warn('Scholar data: could not fetch —', err.message);
+        if (pubList && pubList.querySelector('.pub-loading')) {
+          pubList.innerHTML =
+            `<p class="pub-loading">Could not load publications. ` +
+            `Please visit my <a href="${SCHOLAR_URL}" ` +
+            `style="color:var(--accent)" target="_blank" rel="noopener">Google Scholar profile</a> ` +
+            `for the full list.</p>`;
+        }
       }
     })();
   </script>
