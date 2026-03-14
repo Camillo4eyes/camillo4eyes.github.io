@@ -1,12 +1,20 @@
 {
-  "fetched_at": "2026-03-13T10:40:27.442213+00:00",
+  "fetched_at": "2026-03-14T06:52:49.061935+00:00",
   "author": "Camillo Quattrocchi",
-  "citations": 71,
+  "citations": 73,
   "hindex": 5,
   "i10index": 3,
   "publications": [
     {
       "title": "Exocentric-to-Egocentric Adaptation for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs: C. Quattrocchi et al.",
+      "year": "2026",
+      "venue": "",
+      "authors": "",
+      "cited_by": 1,
+      "scholar_url": ""
+    },
+    {
+      "title": "ENIGMA-360: An Ego-Exo Dataset for Human Behavior Understanding in Industrial Scenarios",
       "year": "2026",
       "venue": "",
       "authors": "",
@@ -18,7 +26,7 @@
       "year": "2025",
       "venue": "",
       "authors": "",
-      "cited_by": 21,
+      "cited_by": 22,
       "scholar_url": ""
     },
     {
