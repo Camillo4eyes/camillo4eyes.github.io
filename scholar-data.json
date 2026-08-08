@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-01T06:55:12.035684+00:00",
+  "fetched_at": "2026-08-08T06:56:04.494806+00:00",
   "author": "Camillo Quattrocchi",
   "citations": 88,
   "hindex": 5,
@@ -67,14 +67,6 @@
       "venue": "",
       "authors": "",
       "cited_by": 6,
-      "scholar_url": ""
-    },
-    {
-      "title": "Exocentric-to-Egocentric Adaptation for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs",
-      "year": "",
-      "venue": "",
-      "authors": "",
-      "cited_by": 0,
       "scholar_url": ""
     }
   ]
