@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://camillo4eyes.github.io/sitemap.xml

@@ -4,75 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Camillo Quattrocchi, Ph.D. — Data Scientist &amp; AI Researcher</title>
+  <meta name="description" content="Camillo Quattrocchi, PhD in Artificial Intelligence and Computer Vision. Data Scientist at GEST IoT (Acea Group), former postdoc at the University of Catania, indie game developer." />
+  <meta name="author" content="Camillo Quattrocchi" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="canonical" href="https://camillo4eyes.github.io/" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Camillo Quattrocchi, Ph.D. — Data Scientist &amp; AI Researcher" />
+  <meta property="og:description" content="Data science, machine learning, egocentric computer vision research and browser games you can play." />
+  <meta property="og:url" content="https://camillo4eyes.github.io/" />
+  <meta property="og:image" content="https://github.com/Camillo4eyes.png" />
+  <meta name="twitter:card" content="summary" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Camillo Quattrocchi",
+    "honorificSuffix": "PhD",
+    "jobTitle": "Data Scientist",
+    "worksFor": { "@type": "Organization", "name": "GEST IoT" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Università di Catania" },
+    "url": "https://camillo4eyes.github.io/",
+    "sameAs": [
+      "https://github.com/Camillo4eyes",
+      "https://www.linkedin.com/in/cquattrocchi",
+      "https://scholar.google.com/citations?user=z1LNVfMAAAAJ",
+      "https://orcid.org/0000-0002-4999-8698"
+    ]
+  }
+  </script>
   <style>
-    /* ── Reset & base ─────────────────────────────────────────────── */
+    /* ── Reset & tokens ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --accent:   #2563eb;
       --accent2:  #1d4ed8;
+      --accent-soft: #eff6ff;
+      --accent-line: #bfdbfe;
       --bg:       #f8fafc;
       --surface:  #ffffff;
+      --surface2: #f1f5f9;
       --text:     #1e293b;
       --muted:    #64748b;
       --border:   #e2e8f0;
+      --nav-bg:   rgba(255,255,255,.88);
+      --hero-bg:  linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+      --shadow:   0 2px 8px rgba(15,23,42,.05);
+      --shadow-hover: 0 8px 24px rgba(15,23,42,.12);
       --radius:   12px;
+      color-scheme: light;
     }
-    html { scroll-behavior: smooth; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent:   #60a5fa;
+        --accent2:  #93c5fd;
+        --accent-soft: #172554;
+        --accent-line: #1e3a8a;
+        --bg:       #0b1120;
+        --surface:  #111a2e;
+        --surface2: #0f172a;
+        --text:     #e2e8f0;
+        --muted:    #94a3b8;
+        --border:   #1e293b;
+        --nav-bg:   rgba(11,17,32,.85);
+        --hero-bg:  linear-gradient(135deg, #0f1d3a 0%, #0b1120 100%);
+        --shadow:   0 2px 8px rgba(0,0,0,.3);
+        --shadow-hover: 0 8px 24px rgba(0,0,0,.45);
+        color-scheme: dark;
+      }
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
     }
+    a { color: var(--accent); }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 
     /* ── Nav ──────────────────────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,.9);
-      backdrop-filter: blur(10px);
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
     }
     nav .inner {
       max-width: 1000px; margin: auto;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
       height: 60px;
     }
-    nav .brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; }
-    nav ul { list-style: none; display: flex; gap: 1.5rem; }
-    nav a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
-    nav a:hover { color: var(--accent); }
+    nav .brand { font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; white-space: nowrap; }
+    nav ul { list-style: none; display: flex; gap: 1.4rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; white-space: nowrap; }
+    nav ul a:hover, nav ul a.active { color: var(--accent); }
 
     /* ── Sections ─────────────────────────────────────────────────── */
     section { padding: 4rem 2rem; }
-    section:nth-child(even) { background: var(--surface); }
+    section.alt { background: var(--surface); }
     .container { max-width: 1000px; margin: auto; }
     h2.section-title {
       font-size: 1.6rem; margin-bottom: 2rem;
       display: flex; align-items: center; gap: .6rem;
       color: var(--text);
     }
-    h2.section-title::after {
-      content: ''; flex: 1; height: 2px; background: var(--border);
-    }
+    h2.section-title::after { content: ''; flex: 1; height: 2px; background: var(--border); }
+    .section-intro { color: var(--muted); margin: -1.2rem 0 2rem; max-width: 640px; }
 
     /* ── Hero ─────────────────────────────────────────────────────── */
-    #about { background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); }
-    .hero {
-      display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
-    }
+    #about { background: var(--hero-bg); }
+    .hero { display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
     .hero-photo {
       width: 160px; height: 160px; border-radius: 50%;
       border: 4px solid var(--accent);
       object-fit: cover; flex-shrink: 0;
       box-shadow: 0 8px 32px rgba(37,99,235,.2);
+      background: var(--surface);
     }
-    .hero-info h1 { font-size: 2.2rem; margin-bottom: .3rem; }
-    .hero-info .tagline {
-      font-size: 1.1rem; color: var(--accent); font-weight: 600; margin-bottom: .8rem;
-    }
+    .hero-info { flex: 1; min-width: 0; }
+    .hero-info h1 { font-size: 2.2rem; line-height: 1.2; margin-bottom: .4rem; }
+    .hero-info .tagline { font-size: 1.1rem; color: var(--accent); font-weight: 600; margin-bottom: .8rem; }
     .hero-info .location { color: var(--muted); margin-bottom: 1.2rem; font-size: .95rem; }
-    .hero-info .bio { max-width: 560px; color: var(--text); margin-bottom: 1.4rem; }
+    .hero-info .bio { max-width: 600px; color: var(--text); margin-bottom: 1.4rem; }
     .social-links { display: flex; flex-wrap: wrap; gap: .8rem; }
     .social-btn {
       display: inline-flex; align-items: center; gap: .45rem;
@@ -80,258 +136,208 @@
       text-decoration: none; transition: transform .15s, box-shadow .15s;
       border: 2px solid transparent;
     }
-    .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+    .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
     .btn-github   { background: #24292e; color: #fff; }
-    .btn-linkedin { background: #0077b5; color: #fff; }
+    .btn-linkedin { background: #0a66c2; color: #fff; }
     .btn-scholar  { background: #4285f4; color: #fff; }
     .btn-orcid    { background: #a6ce39; color: #1a1a1a; }
+    .btn-mail     { background: var(--surface); color: var(--text); border-color: var(--border); }
+    @media (prefers-color-scheme: dark) { .btn-github { background: #f0f6fc; color: #0d1117; } }
 
-    /* ── Experience & Education ───────────────────────────────────── */
+    /* ── Timeline ─────────────────────────────────────────────────── */
     .timeline { list-style: none; position: relative; padding-left: 1.5rem; }
     .timeline::before {
       content: ''; position: absolute; left: 0; top: .4rem; bottom: .4rem;
       width: 2px; background: var(--border);
     }
-    .timeline li {
-      position: relative; margin-bottom: 2rem;
-    }
-    .timeline li::before {
+    .timeline > li { position: relative; margin-bottom: 2rem; }
+    .timeline > li::before {
       content: ''; position: absolute; left: -1.9rem; top: .45rem;
       width: 12px; height: 12px; border-radius: 50%;
-      background: var(--accent); border: 2px solid #fff;
+      background: var(--accent); border: 2px solid var(--surface);
       box-shadow: 0 0 0 2px var(--accent);
     }
-    .tl-header { display: flex; align-items: flex-start; gap: .8rem; flex-wrap: wrap; }
-    .tl-logo {
-      width: 44px; height: 44px; border-radius: 8px; object-fit: contain;
-      border: 1px solid var(--border); background: #fff; padding: 4px;
-      flex-shrink: 0;
-    }
-    .tl-body { flex: 1; }
     .tl-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: .1rem; }
     .tl-body .tl-org { font-size: .92rem; color: var(--accent); font-weight: 600; }
     .tl-body .tl-meta { font-size: .82rem; color: var(--muted); margin-top: .15rem; }
     .tl-body p { font-size: .9rem; color: var(--text); margin-top: .5rem; }
+    .tl-body ul { margin: .5rem 0 0 1.1rem; font-size: .9rem; }
+    .tl-body ul li { margin-bottom: .35rem; }
+    .tl-skills { font-size: .82rem !important; color: var(--muted) !important; }
 
     /* ── Skills ───────────────────────────────────────────────────── */
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.2rem;
-    }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.6rem 1.2rem; }
     .skill-group h3 {
       font-size: .85rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: .05em; color: var(--muted); margin-bottom: .7rem;
     }
     .skill-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
     .skill-tag {
-      background: #eff6ff; color: var(--accent);
-      border: 1px solid #bfdbfe; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent);
+      border: 1px solid var(--accent-line); border-radius: 999px;
       padding: .2rem .75rem; font-size: .82rem; font-weight: 600;
     }
 
-    /* ── Scholar Stats ────────────────────────────────────────────── */
-    .scholar-stats {
-      display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem;
-    }
+    /* ── Scholar stats & publications ─────────────────────────────── */
+    .scholar-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.6rem; }
     .stat-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.2rem 1.8rem;
-      text-align: center; min-width: 130px; flex: 1;
-      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      border-radius: var(--radius); padding: 1.1rem 1rem;
+      text-align: center; box-shadow: var(--shadow);
     }
-    .stat-card .stat-value {
-      font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1.1;
-    }
-    .stat-card .stat-label {
-      font-size: .8rem; color: var(--muted); margin-top: .3rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: .05em;
-    }
-    .stat-card .stat-note {
-      font-size: .72rem; color: var(--muted); margin-top: .25rem;
-    }
-    .scholar-source {
-      font-size: .8rem; color: var(--muted); margin-top: -.8rem; margin-bottom: 1.5rem;
-    }
-    .scholar-source a { color: var(--accent); }
-    .pub-loading {
-      text-align: center; color: var(--muted); padding: 2rem;
-      font-size: .95rem;
-    }
-    .pub-badge.preprint { background: #7c3aed; }
-
-    /* ── Publications ─────────────────────────────────────────────── */
+    .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .stat-label { font-size: .78rem; color: var(--muted); margin-top: .3rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .scholar-source { font-size: .8rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .pub-loading { text-align: center; color: var(--muted); padding: 2rem; font-size: .95rem; }
     .pub-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.4rem 1.6rem;
-      margin-bottom: 1.2rem;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.3rem 1.5rem; margin-bottom: 1rem;
       display: flex; gap: 1.2rem; align-items: flex-start;
-      box-shadow: 0 2px 8px rgba(0,0,0,.04);
-      transition: box-shadow .2s;
+      box-shadow: var(--shadow); transition: box-shadow .2s;
     }
-    .pub-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+    .pub-card:hover { box-shadow: var(--shadow-hover); }
     .pub-badge {
       background: var(--accent); color: #fff;
       border-radius: 6px; padding: .3rem .7rem;
       font-size: .75rem; font-weight: 700; white-space: nowrap;
-      flex-shrink: 0; align-self: flex-start; margin-top: .15rem;
+      flex-shrink: 0; margin-top: .15rem;
     }
+    @media (prefers-color-scheme: dark) { .pub-badge { color: #0b1120; } }
+    .pub-content { min-width: 0; }
     .pub-content h3 { font-size: 1rem; margin-bottom: .3rem; line-height: 1.4; }
-    .pub-content .authors { color: var(--muted); font-size: .88rem; margin-bottom: .3rem; }
-    .pub-content .venue { font-style: italic; font-size: .88rem; color: var(--accent); margin-bottom: .6rem; }
-    .pub-links { display: flex; gap: .6rem; flex-wrap: wrap; }
-    .pub-link {
-      font-size: .8rem; padding: .25rem .7rem; border-radius: 4px;
-      text-decoration: none; font-weight: 600; border: 1.5px solid;
-      transition: background .15s, color .15s;
-    }
-    .pub-link.paper   { border-color: var(--accent); color: var(--accent); }
-    .pub-link.paper:hover { background: var(--accent); color: #fff; }
-    .pub-link.code    { border-color: #22c55e; color: #16a34a; }
-    .pub-link.code:hover { background: #22c55e; color: #fff; }
-    .pub-citation {
-      display: inline-flex; align-items: center; gap: .3rem;
-      font-size: .78rem; color: var(--muted); margin-top: .3rem;
-      font-weight: 600;
-    }
+    .pub-content h3 a { color: var(--text); text-decoration: none; }
+    .pub-content h3 a:hover { color: var(--accent); text-decoration: underline; }
+    .pub-content .venue { font-style: italic; font-size: .88rem; color: var(--accent); margin-bottom: .4rem; }
+    .pub-citation { font-size: .8rem; color: var(--muted); font-weight: 600; }
     .pub-citation span { color: var(--accent); }
+    .pub-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .6rem 1.3rem; border-radius: 8px; font: inherit; font-weight: 600; font-size: .92rem;
+      text-decoration: none; cursor: pointer; border: 2px solid var(--accent);
+      transition: background .15s, color .15s, transform .15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
+    .btn-ghost { background: transparent; color: var(--accent); }
+    .btn-ghost:hover { background: var(--accent-soft); }
+    @media (prefers-color-scheme: dark) { .btn-primary { color: #0b1120; } }
+
+    /* ── Games ────────────────────────────────────────────────────── */
+    .games-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
+    @media (max-width: 640px) { .games-grid { grid-template-columns: 1fr; } }
+    .game-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
+    }
+    .game-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+    .game-thumb { display: block; aspect-ratio: 8 / 5; background: #0b0b14; }
+    .game-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .game-body { padding: 1.1rem 1.2rem 1.2rem; display: flex; flex-direction: column; flex: 1; gap: .55rem; }
+    .game-body h3 { font-size: 1.1rem; }
+    .game-genre { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
+    .game-body p { font-size: .9rem; color: var(--muted); flex: 1; }
+    .game-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .game-tag { font-size: .75rem; padding: .12rem .55rem; border-radius: 999px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
+    .game-body .btn { align-self: flex-start; margin-top: .3rem; }
+    .games-note { font-size: .82rem; color: var(--muted); margin-top: 1.4rem; }
 
     /* ── Projects ─────────────────────────────────────────────────── */
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.2rem;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
     .proj-card {
-      background: var(--surface);
-      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
       padding: 1.4rem; display: flex; flex-direction: column;
-      box-shadow: 0 2px 8px rgba(0,0,0,.04);
-      transition: box-shadow .2s, transform .2s;
+      box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
       text-decoration: none; color: inherit;
     }
-    .proj-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.1); transform: translateY(-3px); }
-    .proj-card h3 { font-size: 1rem; margin-bottom: .5rem; color: var(--text); }
+    .proj-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+    .proj-card h3 { font-size: 1rem; margin-bottom: .5rem; color: var(--text); overflow-wrap: anywhere; }
     .proj-card p { font-size: .88rem; color: var(--muted); flex: 1; }
-    .proj-meta {
-      display: flex; align-items: center; gap: .8rem; margin-top: 1rem;
-      font-size: .8rem; color: var(--muted);
-    }
-    .lang-dot {
-      width: 10px; height: 10px; border-radius: 50%; display: inline-block;
-    }
-    .lang-python    { background: #3572A5; }
-    .lang-notebook  { background: #DA5B0B; }
-    .stars { display: flex; align-items: center; gap: .2rem; }
+    .proj-meta { display: flex; align-items: center; gap: .8rem; margin-top: 1rem; font-size: .8rem; color: var(--muted); }
+    .lang-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: .2rem; }
+    .lang-python   { background: #3572A5; }
+    .lang-notebook { background: #DA5B0B; }
 
-    /* ── Contact ──────────────────────────────────────────────────── */
+    /* ── Contact & footer ─────────────────────────────────────────── */
     #contact { text-align: center; }
-    #contact .contact-intro { color: var(--muted); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    #contact .contact-intro { color: var(--muted); margin: 0 auto 2rem; max-width: 520px; }
     #contact .social-links { justify-content: center; }
-
-    /* ── Footer ───────────────────────────────────────────────────── */
-    footer {
-      text-align: center; padding: 1.5rem;
-      color: var(--muted); font-size: .82rem;
-      border-top: 1px solid var(--border);
-    }
+    footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--border); }
 
     /* ── Responsive ───────────────────────────────────────────────── */
-    @media (max-width: 600px) {
-      .hero { flex-direction: column; text-align: center; }
+    @media (max-width: 760px) {
+      nav { padding: 0 1rem; }
+      nav .inner { height: auto; flex-direction: column; align-items: stretch; gap: 0; padding-top: .5rem; }
+      nav ul {
+        gap: 1.1rem; overflow-x: auto; padding: .45rem 0 .6rem;
+        scrollbar-width: none; -webkit-overflow-scrolling: touch;
+        mask-image: linear-gradient(90deg, #000 85%, transparent);
+      }
+      nav ul::-webkit-scrollbar { display: none; }
+      html { scroll-padding-top: 96px; }
+      section { padding: 3rem 1rem; }
+      .hero { flex-direction: column; text-align: center; gap: 1.5rem; }
+      .hero-info h1 { font-size: 1.8rem; }
       .social-links { justify-content: center; }
-      nav ul { gap: .8rem; }
-      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .scholar-stats { grid-template-columns: repeat(2, 1fr); }
+      .pub-card { flex-direction: column; gap: .6rem; padding: 1.1rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- ── Nav ── -->
-  <nav>
+  <nav aria-label="Main">
     <div class="inner">
-      <a class="brand" href="#about"></a>
+      <a class="brand" href="#about">Camillo Quattrocchi</a>
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#publications">Publications</a></li>
+        <li><a href="#games">Games</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
 
+  <main>
   <!-- ── Hero / About ── -->
   <section id="about">
     <div class="container">
       <div class="hero">
-        <img
-          class="hero-photo"
-          src="https://github.com/Camillo4eyes.png"
-          alt="Camillo Quattrocchi"
-        />
+        <img class="hero-photo" src="https://github.com/Camillo4eyes.png" alt="Portrait of Camillo Quattrocchi" width="160" height="160" />
         <div class="hero-info">
           <h1>Camillo Quattrocchi, Ph.D.</h1>
-          <p class="tagline">Data Scientist · PhD AI &amp; Computer Vision · ML Engineer</p>
+          <p class="tagline">Data Scientist · PhD in AI &amp; Computer Vision · Indie Game Developer</p>
           <p class="location">📍 Aci Sant'Antonio, Sicily, Italy</p>
           <p class="bio">
-            PhD in Artificial Intelligence from the University of Catania, currently working as a
-            <strong>Data Scientist</strong> at F1 Consulting &amp; Services, focusing on Data Analytics
-            and Machine Learning projects. Former <strong>Postdoctoral Researcher</strong> at the
-            <strong>Image Processing Laboratory (IPLab)</strong>, University of Catania, within the
-            First Person Vision (FPV) group led by Prof. Giovanni Maria Farinella. My expertise spans
-            <em>computer vision</em>, <em>egocentric video understanding</em>, <em>Generative AI</em>,
-            <em>LLMs</em>, and scalable <em>data-driven solutions</em>. Skilled in Python, SQL,
-            Power BI, Scikit-learn, TensorFlow, PyTorch, and Predictive Analytics.
+            <strong>Data Scientist</strong> at <strong>GEST IoT</strong> (Acea Group) and PhD in Artificial
+            Intelligence from the University of Catania. Before that I built analytics and machine learning
+            solutions for Data Reply as a consultant with F1 Consulting &amp; Services, from Generative AI
+            pipelines and Marketing Mix Models on Databricks to a store-staff shift optimization engine on
+            Snowflake. As a <strong>Postdoctoral Researcher</strong> at the Image Processing Laboratory (IPLab)
+            in the First Person Vision group led by Prof. Giovanni Maria Farinella, I worked on
+            <em>egocentric video understanding</em> and <em>exocentric-to-egocentric transfer</em>.
+            In my spare time I design and build <a href="#games">browser and mobile games</a>.
           </p>
           <div class="social-links">
-            <a class="social-btn btn-github"
-               href="https://github.com/Camillo4eyes" target="_blank" rel="noopener">
-              <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor">
-                <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
-                  0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
-                  -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
-                  .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
-                  -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.7 7.7 0 012-.27c.68 0
-                  1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56
-                  .82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0
-                  1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/>
-              </svg>
+            <a class="social-btn btn-github" href="https://github.com/Camillo4eyes" target="_blank" rel="noopener">
+              <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.7 7.7 0 012-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
               GitHub
             </a>
-            <a class="social-btn btn-linkedin"
-               href="https://www.linkedin.com/in/cquattrocchi" target="_blank" rel="noopener">
-              <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
-                  0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
-                  1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337
-                  7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782
-                  13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542
-                  C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24
-                  .774 23.2 0 22.222 0h.003z"/>
-              </svg>
+            <a class="social-btn btn-linkedin" href="https://www.linkedin.com/in/cquattrocchi" target="_blank" rel="noopener">
+              <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               LinkedIn
             </a>
-            <a class="social-btn btn-scholar"
-               href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
-               target="_blank" rel="noopener">
-              <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
-                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4
-                  L12 17l-7-3.82z"/>
-              </svg>
+            <a class="social-btn btn-scholar" href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+              <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
               Google Scholar
             </a>
-            <a class="social-btn btn-orcid"
-               href="https://orcid.org/0000-0002-4999-8698" target="_blank" rel="noopener">
-              <svg height="16" viewBox="0 0 256 256" width="16" fill="currentColor">
-                <path d="M128 0C57.3 0 0 57.3 0 128s57.3 128 128 128 128-57.3
-                  128-128S198.7 0 128 0zm-24.2 188.2H85.3V95.9h18.5v92.3zm-9.3-105
-                  c-5.9 0-10.7-4.8-10.7-10.7s4.8-10.7 10.7-10.7 10.7 4.8 10.7 10.7
-                  -4.8 10.7-10.7 10.7zm93.5 105h-18.5v-45c0-10.8-.2-24.6-15-24.6
-                  -15 0-17.3 11.7-17.3 23.8v45.8h-18.5V95.9h17.7v12.6h.2c2.5-4.7
-                  8.5-9.6 17.4-9.6 18.6 0 22 12.3 22 28.2v61.1z"/>
-              </svg>
+            <a class="social-btn btn-orcid" href="https://orcid.org/0000-0002-4999-8698" target="_blank" rel="noopener">
+              <svg height="16" viewBox="0 0 256 256" width="16" fill="currentColor" aria-hidden="true"><path d="M128 0C57.3 0 0 57.3 0 128s57.3 128 128 128 128-57.3 128-128S198.7 0 128 0zm-24.2 188.2H85.3V95.9h18.5v92.3zm-9.3-105c-5.9 0-10.7-4.8-10.7-10.7s4.8-10.7 10.7-10.7 10.7 4.8 10.7 10.7-4.8 10.7-10.7 10.7zm93.5 105h-18.5v-45c0-10.8-.2-24.6-15-24.6-15 0-17.3 11.7-17.3 23.8v45.8h-18.5V95.9h17.7v12.6h.2c2.5-4.7 8.5-9.6 17.4-9.6 18.6 0 22 12.3 22 28.2v61.1z"/></svg>
               ORCID
             </a>
           </div>
@@ -341,106 +347,104 @@
   </section>
 
   <!-- ── Experience & Education ── -->
-  <section id="experience">
+  <section id="experience" class="alt">
     <div class="container">
       <h2 class="section-title">💼 Work Experience</h2>
       <ul class="timeline">
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Data Scientist</h3>
-              <div class="tl-org">F1 Consulting &amp; Services · Full-time</div>
-              <div class="tl-meta">📍 Remote &nbsp;·&nbsp; Mar 2025 – Present</div>
-              <p>
-                Working on Data Analytics and Machine Learning Projects for Data Reply.<br>
-                – Designed and implemented a Databricks-based analytics pipeline that leverages
-                Generative AI and prompt chaining to transform structured KPI data into automated,
-                data-driven narratives, enhancing business dashboards with interpretable
-                AI-generated insights.<br>
-                – Developing Marketing Mix Models on Databricks to quantify channel impact and ROI,
-                leveraging advanced statistical modeling and scalable data pipelines to drive
-                data-driven marketing optimization.
-              </p>
-              <p><em>Skills: Python, Data Science, Databricks, Generative AI, Power BI</em></p>
-            </div>
+          <div class="tl-body">
+            <h3>Data Scientist</h3>
+            <div class="tl-org">GEST IoT · Acea Group</div>
+            <div class="tl-meta">📍 San Giovanni La Punta, Sicily · Remote &nbsp;·&nbsp; Nov 2026 – Present</div>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Postdoctoral Researcher &amp; Research Grant</h3>
-              <div class="tl-org">Università di Catania · Contract</div>
-              <div class="tl-meta">📍 Catania, Sicily, Italy · On-site &nbsp;·&nbsp; Feb 2024 – May 2025</div>
-              <p>
-                <strong>Postdoctoral Researcher</strong> (Feb 2024 – May 2025) and
-                <strong>Research fellowship</strong> (Feb 2024 – Apr 2025).<br>
-                Research title: <em>"Human Behaviour Understanding from Ego-Exo Data"</em>.<br>
-                Dipartimento di Matematica e Informatica, Università degli Studi di Catania.<br>
-                Partenariato Esteso <em>"Future Artificial Intelligence Research (FAIR)"</em> –
-                Spoke 10 "Sustainable Bio-Socio-Cognitive AI" – WP10.3
-                (Task 10.3.1 – "Dynamic scene graph models from Ego-Exo for human interpretable
-                scene understanding").<br>
-                Responsabile Scientifico: Prof. Giovanni Maria Farinella.
-              </p>
-            </div>
+          <div class="tl-body">
+            <h3>Game Developer</h3>
+            <div class="tl-org">Freelance</div>
+            <div class="tl-meta">📍 Remote &nbsp;·&nbsp; Sep 2026 – Present</div>
+            <p>
+              I design and build independent games for mobile and web, covering the full product cycle:
+              mechanics, game design, programming, UI, testing and release. I focus on progression and
+              retention systems, meaning the mechanics that bring players back (daily challenges, streaks,
+              rewards, achievements), with the same attention to data and user behavior I bring to my data
+              science work. <a href="#games">Play my games here.</a>
+            </p>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Research Positions</h3>
-              <div class="tl-org">Università di Catania · Contract</div>
-              <div class="tl-meta">📍 Catania, Sicily, Italy &nbsp;·&nbsp; Sep 2020 – Mar 2022</div>
-              <ul style="margin:.4rem 0 0 1.2rem; color:var(--text); font-size:.92rem;">
-                <li style="margin-bottom:.5rem;">
-                  <strong>Research project participation</strong> (2021 – 2022, 1 year) — SAFER project,
-                  Safety in road construction activities. Part of the additional PhD scholarship
-                  under the National Operational Program "Research and Innovation".
-                </li>
-                <li style="margin-bottom:.5rem;">
-                  <strong>Research fellowship</strong> (Oct 2021 – Mar 2022, 6 months) — Title:
-                  <em>"Design, prototyping and evaluation of object detection and recognition
-                  algorithms from egocentric images"</em>.
-                </li>
-                <li>
-                  <strong>Research project participation</strong> (Sep 2020 – Mar 2021, 7 months) —
-                  ENIGMA project, Egocentric Navigator for Industrial Guidance, Monitoring
-                  and Anticipation. Project funded by PON "Enterprises and Competitiveness" 2014-2020
-                  (ERDF) and the Fund for Sustainable Growth.
-                </li>
-              </ul>
-            </div>
+          <div class="tl-body">
+            <h3>Data Scientist</h3>
+            <div class="tl-org">F1 Consulting &amp; Services · for Data Reply</div>
+            <div class="tl-meta">📍 Remote &nbsp;·&nbsp; Mar 2025 – Oct 2026</div>
+            <ul>
+              <li>Designed and implemented a Databricks-based analytics pipeline that uses Generative AI and
+                prompt chaining to turn structured KPI data into automated, data-driven narratives, adding
+                interpretable AI-generated insights to business dashboards.</li>
+              <li>Developed Marketing Mix Models on Databricks to quantify channel impact and ROI, with
+                statistical modeling and scalable data pipelines for marketing optimization.</li>
+              <li>Led backend development of a store-staff shift optimization engine for a multi-brand fashion
+                retailer, turning foot-traffic forecasts into labor-compliant shift schedules through a layered
+                forecasting-and-optimization pipeline on Snowflake.</li>
+            </ul>
+            <p class="tl-skills">Python · SQL · Databricks · Snowflake · Generative AI · Forecasting · Optimization · Power BI</p>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Stage (Internship)</h3>
-              <div class="tl-org">STMicroelectronics · Contract</div>
-              <div class="tl-meta">📍 Catania, Sicily, Italy · On-site &nbsp;·&nbsp; Jan 2020 – Jul 2020 (7 months)</div>
-              <p>
-                Internship at STMicroelectronics: data analysis work carried out within the
-                company's IT department (Jan 2020 – Jul 2020).
-              </p>
-            </div>
+          <div class="tl-body">
+            <h3>Postdoctoral Researcher &amp; Research Fellow</h3>
+            <div class="tl-org">Università di Catania · IPLab</div>
+            <div class="tl-meta">📍 Catania, Sicily &nbsp;·&nbsp; Feb 2024 – May 2025</div>
+            <p>
+              Research fellowship <em>"Human Behaviour Understanding from Ego-Exo Data"</em>, Department of
+              Mathematics and Computer Science, within the extended partnership <em>Future Artificial
+              Intelligence Research (FAIR)</em>, Spoke 10 "Sustainable Bio-Socio-Cognitive AI", WP10.3
+              (Task 10.3.1, "Dynamic scene graph models from Ego-Exo for human interpretable scene
+              understanding"). Scientific supervisor: Prof. Giovanni Maria Farinella.
+            </p>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Research Grant</h3>
-              <div class="tl-org">Università di Catania · Contract</div>
-              <div class="tl-meta">📍 Catania, Italy · On-site &nbsp;·&nbsp; Jan 2020 – Jul 2020 (7 months)</div>
-              <p>
-                Recipient of a research grant awarded by the University of Catania for the project
-                titled <em>"Data Analytics for Quality: Application of multivariate analysis in production"</em>.
-              </p>
-            </div>
+          <div class="tl-body">
+            <h3>Research Projects</h3>
+            <div class="tl-org">Università di Catania</div>
+            <div class="tl-meta">📍 Catania, Sicily &nbsp;·&nbsp; Sep 2020 – 2022</div>
+            <ul>
+              <li><strong>SAFER</strong>, safety in road construction activities (2021 – 2022). Part of the
+                additional PhD scholarship of the National Operational Programme "Research and Innovation"
+                2014-2020, "Innovative PhDs with industrial characterization".</li>
+              <li><strong>Research fellowship</strong> (Oct 2020 – Mar 2021): <em>"Design, prototyping and
+                evaluation of object detection and recognition algorithms from egocentric images"</em>.</li>
+              <li><strong>ENIGMA</strong>, Egocentric Navigator for Industrial Guidance, Monitoring and
+                Anticipation (Sep 2020 – Mar 2021). Funded by PON "Enterprises and Competitiveness" 2014-2020
+                (ERDF) and the Fund for Sustainable Growth.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <div class="tl-body">
+            <h3>Data Analysis Intern</h3>
+            <div class="tl-org">STMicroelectronics</div>
+            <div class="tl-meta">📍 Catania, Sicily &nbsp;·&nbsp; Jan 2020 – Jul 2020</div>
+            <p>Data analysis within the company's IT department.</p>
+          </div>
+        </li>
+
+        <li>
+          <div class="tl-body">
+            <h3>Research Scholarship</h3>
+            <div class="tl-org">Università di Catania</div>
+            <div class="tl-meta">📍 Catania, Sicily &nbsp;·&nbsp; Jan 2020 – Jul 2020</div>
+            <p>
+              Research scholarship for the project <em>"Data Analytics for Quality"</em>: multivariate analysis
+              applied to the production and testing of semiconductor devices.
+            </p>
           </div>
         </li>
 
@@ -450,76 +454,56 @@
       <ul class="timeline">
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Doctor of Philosophy (PhD) — Artificial Intelligence</h3>
-              <div class="tl-org">Università di Catania</div>
-              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; Mar 2021 – Feb 2025</div>
-              <p>
-                Research on egocentric video understanding, temporal action segmentation, and
-                exocentric-to-egocentric knowledge transfer. Supervised by Prof. Giovanni Maria Farinella.
-                Partly funded by <em>Future Artificial Intelligence Research (FAIR) – PNRR MUR</em>.
-                Published at ECCV 2024.
-              </p>
-            </div>
+          <div class="tl-body">
+            <h3>PhD in Artificial Intelligence</h3>
+            <div class="tl-org">Università di Catania</div>
+            <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; Mar 2021 – Feb 2025</div>
+            <p>
+              Research on egocentric video understanding, temporal action segmentation, synthetic data and
+              exocentric-to-egocentric knowledge transfer, supervised by Prof. Giovanni Maria Farinella.
+              Work published at ECCV, IJCV, ICIAP and VISAPP.
+            </p>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Visiting PhD Researcher (Remote)</h3>
-              <div class="tl-org">University of Nottingham</div>
-              <div class="tl-meta">📍 Nottingham, United Kingdom (Remote) &nbsp;·&nbsp; Sep 2023 – Nov 2023</div>
-              <p>
-                Remote research period in collaboration with the University of Nottingham,
-                Nottingham, United Kingdom.
-              </p>
-            </div>
+          <div class="tl-body">
+            <h3>Visiting PhD Researcher</h3>
+            <div class="tl-org">University of Nottingham</div>
+            <div class="tl-meta">📍 Nottingham, United Kingdom (remote) &nbsp;·&nbsp; Sep 2023 – Nov 2023</div>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Visiting PhD Researcher</h3>
-              <div class="tl-org">Edinburgh Napier University</div>
-              <div class="tl-meta">📍 Edinburgh, United Kingdom &nbsp;·&nbsp; Sep 2022 – Mar 2023</div>
-              <p>
-                Research period abroad as part of the PhD at Napier University, Edinburgh, United Kingdom.
-              </p>
-            </div>
+          <div class="tl-body">
+            <h3>Visiting PhD Researcher</h3>
+            <div class="tl-org">Edinburgh Napier University</div>
+            <div class="tl-meta">📍 Edinburgh, United Kingdom &nbsp;·&nbsp; Sep 2022 – Mar 2023</div>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Master's Degree — Computer Science</h3>
-              <div class="tl-org">Università di Catania — Dipartimento di Matematica e Informatica</div>
-              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; Oct 2018 – Jul 2020</div>
-              <p>Graduated with final grade <strong>110L</strong> (with honours). Focus on machine learning and computer vision.</p>
-            </div>
+          <div class="tl-body">
+            <h3>Master's Degree in Computer Science</h3>
+            <div class="tl-org">Università di Catania</div>
+            <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; Oct 2018 – Jul 2020</div>
+            <p>Graduated <strong>110/110 cum laude</strong>, with a focus on machine learning and computer vision.</p>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Bachelor's Degree — Computer Science</h3>
-              <div class="tl-org">Università di Catania — Dipartimento di Matematica e Informatica</div>
-              <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; Jan 2015 – Jul 2018</div>
-            </div>
+          <div class="tl-body">
+            <h3>Bachelor's Degree in Computer Science</h3>
+            <div class="tl-org">Università di Catania</div>
+            <div class="tl-meta">📍 Catania, Italy &nbsp;·&nbsp; Jan 2015 – Jul 2018</div>
           </div>
         </li>
 
         <li>
-          <div class="tl-header">
-            <div class="tl-body">
-              <h3>Diploma — Electronics, Electrical Engineering and Automation</h3>
-              <div class="tl-org">I.T.I.S. Galileo Ferraris</div>
-              <div class="tl-meta">2010 – 2015</div>
-            </div>
+          <div class="tl-body">
+            <h3>High School Diploma — Electronics, Electrical Engineering and Automation</h3>
+            <div class="tl-org">I.T.I.S. Galileo Ferraris</div>
+            <div class="tl-meta">2010 – 2015</div>
           </div>
         </li>
 
@@ -534,81 +518,64 @@
       <div class="skills-grid">
 
         <div class="skill-group">
-          <h3>Languages</h3>
+          <h3>Programming</h3>
           <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">C</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">C++</span>
-            <span class="skill-tag">Java</span>
-            <span class="skill-tag">Java Script</span>
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">HTML</span>
-            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">Python</span><span class="skill-tag">SQL</span><span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">C</span><span class="skill-tag">C++</span><span class="skill-tag">Java</span>
+            <span class="skill-tag">R</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>Computer Vision &amp; ML</h3>
+          <h3>Machine Learning &amp; Vision</h3>
           <div class="skill-tags">
-            <span class="skill-tag">PyTorch</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">OpenCV</span>
-            <span class="skill-tag">DINOv2</span>
-            <span class="skill-tag">Temporal Action Segmentation</span>
-            <span class="skill-tag">Egocentric Vision</span>
-            <span class="skill-tag">Transfer Learning</span>
+            <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Scikit-learn</span>
+            <span class="skill-tag">OpenCV</span><span class="skill-tag">DINOv2</span><span class="skill-tag">Forecasting</span>
+            <span class="skill-tag">Marketing Mix Modeling</span><span class="skill-tag">Temporal Action Segmentation</span>
+            <span class="skill-tag">Egocentric Vision</span><span class="skill-tag">Transfer Learning</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>LLM &amp; RAG</h3>
+          <h3>Generative AI</h3>
           <div class="skill-tags">
-            <span class="skill-tag">LangChain</span>
-            <span class="skill-tag">OpenAI API</span>
-            <span class="skill-tag">Ollama</span>
-            <span class="skill-tag">ChromaDB</span>
-            <span class="skill-tag">FAISS</span>
-            <span class="skill-tag">RAG Pipelines</span>
+            <span class="skill-tag">LLMs</span><span class="skill-tag">Prompt chaining</span><span class="skill-tag">LangChain</span>
+            <span class="skill-tag">OpenAI API</span><span class="skill-tag">Ollama</span><span class="skill-tag">RAG pipelines</span>
+            <span class="skill-tag">ChromaDB</span><span class="skill-tag">FAISS</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Data Platforms &amp; BI</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Databricks</span><span class="skill-tag">Snowflake</span><span class="skill-tag">Azure</span>
+            <span class="skill-tag">Power BI</span><span class="skill-tag">Pandas</span><span class="skill-tag">NumPy</span>
+            <span class="skill-tag">Matplotlib</span><span class="skill-tag">Jupyter</span>
           </div>
         </div>
 
         <div class="skill-group">
           <h3>Engineering</h3>
           <div class="skill-tags">
-            <span class="skill-tag">FastAPI</span>
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">Pytest</span>
-            <span class="skill-tag">GitHub Actions</span>
-            <span class="skill-tag">Typer</span>
-            <span class="skill-tag">Pydantic</span>
-            <span class="skill-tag">Ruff</span>
-            <span class="skill-tag">mypy</span>
-            <span class="skill-tag">uvicorn</span>
+            <span class="skill-tag">FastAPI</span><span class="skill-tag">Docker</span><span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub Actions</span><span class="skill-tag">Pytest</span><span class="skill-tag">Pydantic</span>
+            <span class="skill-tag">Ruff</span><span class="skill-tag">mypy</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>Data &amp; Tools</h3>
+          <h3>Game Development</h3>
           <div class="skill-tags">
-            <span class="skill-tag">NumPy</span>
-            <span class="skill-tag">Pandas</span>
-            <span class="skill-tag">Jupyter</span>
-            <span class="skill-tag">Matplotlib</span>
-            <span class="skill-tag">Power BI</span>
-            <span class="skill-tag">Databricks</span>
-            <span class="skill-tag">Google Colab</span>
-            <span class="skill-tag">BeautifulSoup</span>
+            <span class="skill-tag">Game design</span><span class="skill-tag">HTML5 Canvas</span><span class="skill-tag">Web Audio</span>
+            <span class="skill-tag">Pixel art</span><span class="skill-tag">Capacitor</span><span class="skill-tag">Android</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>Languages (spoken)</h3>
+          <h3>Languages</h3>
           <div class="skill-tags">
-            <span class="skill-tag">Italian 🇮🇹 (native)</span>
-            <span class="skill-tag">English 🇬🇧 (professional)</span>
+            <span class="skill-tag">Italian (native)</span>
+            <span class="skill-tag">English (professional)</span>
           </div>
         </div>
 
@@ -617,84 +584,138 @@
   </section>
 
   <!-- ── Publications ── -->
-  <section id="publications">
+  <section id="publications" class="alt">
     <div class="container">
       <h2 class="section-title">📄 Publications</h2>
 
-      <!-- Scholar stats banner -->
-      <div class="scholar-stats" id="scholar-stats">
-        <div class="stat-card">
-          <div class="stat-value" id="stat-citations">—</div>
-          <div class="stat-label">Citations</div>
-          <div class="stat-note">total</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="stat-hindex">—</div>
-          <div class="stat-label">h-index</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="stat-i10index">—</div>
-          <div class="stat-label">i10-index</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="stat-papers">—</div>
-          <div class="stat-label">Papers</div>
-        </div>
+      <div class="scholar-stats">
+        <div class="stat-card"><div class="stat-value" id="stat-citations">—</div><div class="stat-label">Citations</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-hindex">—</div><div class="stat-label">h-index</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-i10index">—</div><div class="stat-label">i10-index</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-papers">—</div><div class="stat-label">Papers</div></div>
       </div>
-      <p class="scholar-source">
+      <p class="scholar-source" id="scholar-source">
         📊 Metrics and publications from
-        <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
-           target="_blank" rel="noopener">Google Scholar</a>,
-        updated daily.
+        <a href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.
       </p>
 
-      <!-- Dynamic publication list populated by JS -->
-      <div id="pub-list">
-        <p class="pub-loading">⏳ Loading publications…</p>
+      <div id="pub-list"><p class="pub-loading">⏳ Loading publications…</p></div>
+      <div class="pub-actions" id="pub-actions"></div>
+    </div>
+  </section>
+
+  <!-- ── Games ── -->
+  <section id="games">
+    <div class="container">
+      <h2 class="section-title">🎮 Games</h2>
+      <p class="section-intro">
+        Independent games I designed and built from scratch, with no engine and no external assets: pixel art,
+        music and sound are all generated in code. They run in the browser, on desktop and on phones.
+      </p>
+      <div class="games-grid">
+
+        <article class="game-card">
+          <a class="game-thumb" href="games/shardspire/" aria-label="Play Shardspire">
+            <img src="assets/games/shardspire.webp" alt="Shardspire title screen: a tower rising from the sea under a starry sky" width="800" height="500" loading="lazy" />
+          </a>
+          <div class="game-body">
+            <span class="game-genre">Roguelike · JRPG</span>
+            <h3>Shardspire</h3>
+            <p>A turn-based pixel-art roguelike in the spirit of classic JRPGs. Pick a hero, descend branching
+              biomes, build your run with talents and loot, and face seven bosses with telegraphed attacks.</p>
+            <div class="game-tags">
+              <span class="game-tag">8 languages</span><span class="game-tag">Portrait · touch &amp; keyboard</span><span class="game-tag">Offline</span>
+            </div>
+            <a class="btn btn-primary" href="games/shardspire/">▶ Play</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <a class="game-thumb" href="games/wound/" aria-label="Play Wound">
+            <img src="assets/games/wound.webp" alt="Wound title screen with a golden wind-up key" width="800" height="500" loading="lazy" />
+          </a>
+          <div class="game-body">
+            <span class="game-genre">Metroidvania</span>
+            <h3>Wound</h3>
+            <p>A melancholic metroidvania: a tin wind-up knight explores an empty house where the toys have
+              woken up. Six areas, four bosses, five abilities and two endings.</p>
+            <div class="game-tags">
+              <span class="game-tag">English · Italiano</span><span class="game-tag">Landscape · touch, keyboard, gamepad</span>
+            </div>
+            <a class="btn btn-primary" href="games/wound/">▶ Play</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <a class="game-thumb" href="games/fuga-al-neon/" aria-label="Play Fuga al Neon">
+            <img src="assets/games/fuga-al-neon.webp" alt="Fuga al Neon main menu over a neon cyberpunk skyline" width="800" height="500" loading="lazy" />
+          </a>
+          <div class="game-body">
+            <span class="game-genre">Endless runner · Roguelite</span>
+            <h3>Fuga al Neon</h3>
+            <p>A cyberpunk endless runner set in Neo-Catania, 2087. Jump, slash and parry, pick power-up cards
+              between sectors, beat the Sentinel boss and spend credits on permanent upgrades.</p>
+            <div class="game-tags">
+              <span class="game-tag">Italian</span><span class="game-tag">Landscape · touch &amp; keyboard</span>
+            </div>
+            <a class="btn btn-primary" href="games/fuga-al-neon/">▶ Play</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <a class="game-thumb" href="games/sudopamina/" aria-label="Play Sudopamina">
+            <img src="assets/games/sudopamina.webp" alt="Sudopamina home screen with colorful number tiles" width="800" height="500" loading="lazy" />
+          </a>
+          <div class="game-body">
+            <span class="game-genre">Puzzle · Sudoku</span>
+            <h3>Sudopamina</h3>
+            <p>Sudoku built around retention: timed combos with score multipliers, a daily challenge with
+              streaks, XP levels, gems for hints and 16 trophies. Every puzzle has a unique solution.</p>
+            <div class="game-tags">
+              <span class="game-tag">Italian</span><span class="game-tag">Portrait · touch &amp; keyboard</span><span class="game-tag">Offline</span>
+            </div>
+            <a class="btn btn-primary" href="games/sudopamina/">▶ Play</a>
+          </div>
+        </article>
+
       </div>
+      <p class="games-note">Progress is saved in your browser on this device.</p>
     </div>
   </section>
 
   <!-- ── Projects ── -->
-  <section id="projects">
+  <section id="projects" class="alt">
     <div class="container">
       <h2 class="section-title">🚀 Projects</h2>
       <div class="projects-grid">
 
-        <a class="proj-card"
-           href="https://github.com/Camillo4eyes/LupusInFabula_Datapizza_AI"
-           target="_blank" rel="noopener">
+        <a class="proj-card" href="https://github.com/Camillo4eyes/LupusInFabula_Datapizza_AI" target="_blank" rel="noopener">
           <h3>LupusInFabula_Datapizza_AI</h3>
-          <p>Autonomous AI simulation of Lupus in Fabula (Werewolf/Mafia) with secret roles,
-             narrative storytelling, and strategic player planning using LLM agents.</p>
+          <p>Autonomous AI simulation of Lupus in Fabula (Werewolf/Mafia) with secret roles, narrative
+             storytelling and strategic player planning using LLM agents.</p>
           <div class="proj-meta">
-            <span><span class="lang-dot lang-notebook"></span> Jupyter Notebook</span>
-            <span class="stars" id="stars-lupus">⭐ 5</span>
+            <span><span class="lang-dot lang-notebook"></span>Jupyter Notebook</span>
+            <span id="stars-lupus">⭐ 5</span>
           </div>
         </a>
 
-        <a class="proj-card"
-           href="https://github.com/Camillo4eyes/rag-studio"
-           target="_blank" rel="noopener">
+        <a class="proj-card" href="https://github.com/Camillo4eyes/rag-studio" target="_blank" rel="noopener">
           <h3>rag-studio</h3>
-          <p>🧠 A modular RAG (Retrieval-Augmented Generation) framework for building
-             production-ready retrieval-augmented pipelines with multi-provider LLM support,
-             FastAPI REST interface, and Docker deployment.</p>
+          <p>A modular Retrieval-Augmented Generation framework for production-ready pipelines, with
+             multi-provider LLM support, a FastAPI REST interface and Docker deployment.</p>
           <div class="proj-meta">
-            <span><span class="lang-dot lang-python"></span> Python</span>
-            <span class="stars" id="stars-rag">⭐ 1</span>
+            <span><span class="lang-dot lang-python"></span>Python</span>
+            <span id="stars-rag">⭐ 1</span>
           </div>
         </a>
 
-        <a class="proj-card"
-           href="https://github.com/fpv-iplab/synchronization-is-all-you-need"
-           target="_blank" rel="noopener">
+        <a class="proj-card" href="https://github.com/fpv-iplab/synchronization-is-all-you-need" target="_blank" rel="noopener">
           <h3>synchronization-is-all-you-need</h3>
-          <p>Code for the ECCV 2024 paper: Exocentric-to-Egocentric Transfer for Temporal
-             Action Segmentation with Unlabeled Synchronized Video Pairs.</p>
+          <p>Code for the ECCV 2024 paper "Synchronization is All You Need: Exocentric-to-Egocentric Transfer
+             for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs".</p>
           <div class="proj-meta">
-            <span><span class="lang-dot lang-python"></span> Python</span>
-            <span class="stars" id="stars-sync">⭐ 8</span>
+            <span><span class="lang-dot lang-python"></span>Python</span>
+            <span id="stars-sync">⭐ 8</span>
           </div>
         </a>
 
@@ -707,338 +728,153 @@
     <div class="container">
       <h2 class="section-title">📬 Contact</h2>
       <p class="contact-intro">
-        Feel free to reach out via LinkedIn or explore my work on GitHub and Google Scholar.
-        I'm always open to discussing research collaborations, AI projects, or interesting ideas.
+        Feel free to reach out on LinkedIn or explore my work on GitHub and Google Scholar.
+        I'm always open to talking about data science, AI projects, research collaborations or games.
       </p>
       <div class="social-links">
-        <a class="social-btn btn-github"
-           href="https://github.com/Camillo4eyes" target="_blank" rel="noopener">
-          <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
-              0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
-              -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
-              .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
-              -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.7 7.7 0 012-.27c.68 0
-              1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56
-              .82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0
-              1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/>
-          </svg>
-          GitHub
-        </a>
-        <a class="social-btn btn-linkedin"
-           href="https://www.linkedin.com/in/cquattrocchi" target="_blank" rel="noopener">
-          <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
-              0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
-              1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337
-              7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782
-              13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542
-              C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24
-              .774 23.2 0 22.222 0h.003z"/>
-          </svg>
-          LinkedIn
-        </a>
-        <a class="social-btn btn-scholar"
-           href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en"
-           target="_blank" rel="noopener">
-          <svg height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
-            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4
-              L12 17l-7-3.82z"/>
-          </svg>
-          Google Scholar
-        </a>
-        <a class="social-btn btn-orcid"
-           href="https://orcid.org/0000-0002-4999-8698" target="_blank" rel="noopener">
-          <svg height="16" viewBox="0 0 256 256" width="16" fill="currentColor">
-            <path d="M128 0C57.3 0 0 57.3 0 128s57.3 128 128 128 128-57.3
-              128-128S198.7 0 128 0zm-24.2 188.2H85.3V95.9h18.5v92.3zm-9.3-105
-              c-5.9 0-10.7-4.8-10.7-10.7s4.8-10.7 10.7-10.7 10.7 4.8 10.7 10.7
-              -4.8 10.7-10.7 10.7zm93.5 105h-18.5v-45c0-10.8-.2-24.6-15-24.6
-              -15 0-17.3 11.7-17.3 23.8v45.8h-18.5V95.9h17.7v12.6h.2c2.5-4.7
-              8.5-9.6 17.4-9.6 18.6 0 22 12.3 22 28.2v61.1z"/>
-          </svg>
-          ORCID
-        </a>
+        <a class="social-btn btn-linkedin" href="https://www.linkedin.com/in/cquattrocchi" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="social-btn btn-github" href="https://github.com/Camillo4eyes" target="_blank" rel="noopener">GitHub</a>
+        <a class="social-btn btn-scholar" href="https://scholar.google.com/citations?user=z1LNVfMAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        <a class="social-btn btn-orcid" href="https://orcid.org/0000-0002-4999-8698" target="_blank" rel="noopener">ORCID</a>
       </div>
     </div>
   </section>
+  </main>
 
   <footer>
-    <p>© 2026 Camillo Quattrocchi · Built with ❤️ and hosted on GitHub Pages</p>
-    <p style="margin-top:.6rem">
-      <img src="https://visitor-badge.laobi.icu/badge?page_id=camillo4eyes.camillo4eyes.github.io&left_color=555555&right_color=2563eb&left_text=Daily%20Visitors"
-           alt="Visitor counter badge showing daily visitors" loading="lazy" style="vertical-align:middle"
-           onerror="this.parentElement.style.display='none'" />
-    </p>
+    <p>© <span id="year">2026</span> Camillo Quattrocchi · Hosted on GitHub Pages</p>
   </footer>
 
   <script>
-    /* ── Fetch live GitHub star counts for project cards ── */
-    (async () => {
-      const GH_REPOS = [
-        { owner: 'Camillo4eyes', repo: 'LupusInFabula_Datapizza_AI', elemId: 'stars-lupus' },
-        { owner: 'Camillo4eyes', repo: 'rag-studio',                  elemId: 'stars-rag'  },
-        { owner: 'fpv-iplab',    repo: 'synchronization-is-all-you-need', elemId: 'stars-sync' },
-      ];
-      for (const { owner, repo, elemId } of GH_REPOS) {
-        try {
-          const resp = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-            headers: { Accept: 'application/vnd.github+json' },
-          });
-          if (!resp.ok) continue;
-          const data = await resp.json();
-          const el = document.getElementById(elemId);
-          if (el && data.stargazers_count !== undefined) {
-            el.textContent = `⭐ ${data.stargazers_count.toLocaleString()}`;
-          }
-        } catch { /* silently keep static fallback */ }
-      }
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ── Highlight the nav link of the section in view ── */
+    (() => {
+      const links = [...document.querySelectorAll('nav ul a')];
+      const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
+      if (!('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          links.forEach(a => a.classList.remove('active'));
+          const a = byId[e.target.id];
+          if (a) { a.classList.add('active'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
     })();
 
-    /* ── Fetch Scholar stats + top-3 publications ── */
+    /* ── Live GitHub star counts (static values stay if the API is unavailable) ── */
     (async () => {
-      const SCHOLAR_URL  = 'https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en';
-      const AUTHOR_NAME  = /quattrocchi/i;
+      const repos = [
+        ['Camillo4eyes', 'LupusInFabula_Datapizza_AI', 'stars-lupus'],
+        ['Camillo4eyes', 'rag-studio', 'stars-rag'],
+        ['fpv-iplab', 'synchronization-is-all-you-need', 'stars-sync'],
+      ];
+      await Promise.all(repos.map(async ([owner, repo, id]) => {
+        try {
+          const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers: { Accept: 'application/vnd.github+json' } });
+          if (!r.ok) return;
+          const d = await r.json();
+          if (typeof d.stargazers_count === 'number') document.getElementById(id).textContent = `⭐ ${d.stargazers_count.toLocaleString('en')}`;
+        } catch { /* keep fallback */ }
+      }));
+    })();
 
-      /* Helper: safely set element text */
-      const setText = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-      };
+    /* ── Scholar metrics and publications from scholar-data.json ── */
+    (async () => {
+      const SCHOLAR_URL = 'https://scholar.google.com/citations?user=z1LNVfMAAAAJ&hl=en';
+      const TOP_N = 3;
+      const $ = id => document.getElementById(id);
+      const list = $('pub-list'), actions = $('pub-actions');
 
-      /* Build a pub-card from a scholar-data.json entry */
-      const buildCardFromLocal = (pub) => {
-        const year    = pub.year  || '';
-        const venue   = pub.venue || '';
-        const isArXiv = !venue || /arxiv|preprint/i.test(venue);
-        const badgeLabel = [venue || 'arXiv', year].filter(Boolean).join(' ');
+      /* Scholar titles sometimes carry author suffixes or a translated title in brackets */
+      const cleanTitle = t => String(t || 'Untitled')
+        .replace(/:\s*[A-Z]\.\s*\S+\s+et al\.?\s*$/, '')
+        .replace(/\s*\[[^\]]*(\]|…)\s*$/, '')
+        .replace(/\.$/, '')
+        .trim();
 
-        const card = document.createElement('div');
-        card.className = 'pub-card';
-
+      const card = pub => {
+        const el = document.createElement('article');
+        el.className = 'pub-card';
         const badge = document.createElement('span');
-        badge.className = 'pub-badge' + (isArXiv ? ' preprint' : '');
-        badge.textContent = badgeLabel;
-
-        const content = document.createElement('div');
-        content.className = 'pub-content';
-
+        badge.className = 'pub-badge';
+        badge.textContent = pub.year || '—';
+        const body = document.createElement('div');
+        body.className = 'pub-content';
         const h3 = document.createElement('h3');
+        const title = cleanTitle(pub.title);
         if (pub.scholar_url) {
           const a = document.createElement('a');
-          a.href = pub.scholar_url;
-          a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = pub.title || 'Untitled';
+          a.href = pub.scholar_url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = title;
           h3.appendChild(a);
-        } else {
-          h3.textContent = pub.title || 'Untitled';
+        } else h3.textContent = title;
+        body.appendChild(h3);
+        if (pub.venue) {
+          const v = document.createElement('p');
+          v.className = 'venue'; v.textContent = pub.venue;
+          body.appendChild(v);
         }
-
-        const venueP = document.createElement('p');
-        venueP.className = 'venue';
-        venueP.textContent = [venue || 'arXiv preprint', year].filter(Boolean).join(', ');
-
-        const citeP = document.createElement('p');
-        citeP.className = 'pub-citation';
-        const count = pub.cited_by ?? '—';
-        const countStr = typeof count === 'number' ? count.toLocaleString() : count;
-        citeP.innerHTML = `🔖 Citations: <span>${countStr}</span>`;
-
-        content.appendChild(h3);
-        content.appendChild(venueP);
-        content.appendChild(citeP);
-
-        card.appendChild(badge);
-        card.appendChild(content);
-        return card;
+        const c = document.createElement('p');
+        c.className = 'pub-citation';
+        c.append('🔖 Citations: ');
+        const n = document.createElement('span');
+        n.textContent = (pub.cited_by ?? 0).toLocaleString('en');
+        c.appendChild(n);
+        body.appendChild(c);
+        el.append(badge, body);
+        return el;
       };
 
-      /* Append a "View all publications" link to the container */
-      const appendViewAll = (container) => {
-        const p = document.createElement('p');
-        p.style.cssText = 'text-align:center;margin-top:1.5rem';
+      const scholarLink = () => {
         const a = document.createElement('a');
-        a.href = SCHOLAR_URL;
-        a.target = '_blank'; a.rel = 'noopener';
-        a.style.cssText = 'display:inline-block;padding:0.6rem 1.4rem;background:var(--accent);color:#fff;border-radius:0.5rem;text-decoration:none;font-weight:600';
-        a.textContent = '📚 View all publications on Google Scholar';
-        p.appendChild(a);
-        container.appendChild(p);
-      };
-
-      const pubList = document.getElementById('pub-list');
-
-      /* ── 1. Load metrics + publications from scholar-data.json ── */
-      let localPubs = null;
-      try {
-        const sdResp = await fetch('scholar-data.json');
-        if (sdResp.ok) {
-          const sd = await sdResp.json();
-          if (sd.citations !== null && sd.citations !== undefined)
-            setText('stat-citations', Number(sd.citations).toLocaleString());
-          if (sd.hindex !== null && sd.hindex !== undefined)
-            setText('stat-hindex', sd.hindex);
-          if (sd.i10index !== null && sd.i10index !== undefined)
-            setText('stat-i10index', sd.i10index);
-          if (sd.publications && Array.isArray(sd.publications)) {
-            setText('stat-papers', sd.publications.length);
-            localPubs = sd.publications;
-          }
-        }
-      } catch (_) { /* fall through to Semantic Scholar */ }
-
-      /* If scholar-data.json has publications, render top 3 by citations.
-         Uses field `cited_by` (scholar-data.json schema). Publications with
-         no citation data (null/undefined) are sorted below those with data. */
-      if (localPubs && localPubs.length > 0 && pubList) {
-        const top3 = [...localPubs]
-          .filter(p => p.cited_by != null)
-          .sort((a, b) => (b.cited_by || 0) - (a.cited_by || 0))
-          .slice(0, 3);
-        pubList.innerHTML = '';
-        top3.forEach(p => pubList.appendChild(buildCardFromLocal(p)));
-        appendViewAll(pubList);
-        return;
-      }
-
-      /* ── 2. Fallback: try Semantic Scholar for metrics + top-3 publications ── */
-      const S2_BASE = 'https://api.semanticscholar.org/graph/v1';
-
-      /* Build a pub-card from a Semantic Scholar paper object */
-      const buildCard = (paper) => {
-        const year    = paper.year  || '';
-        const venue   = paper.venue || '';
-        const isArXiv = !venue || /arxiv|preprint/i.test(venue);
-        const badgeLabel = [venue || 'arXiv', year].filter(Boolean).join(' ');
-
-        const card = document.createElement('div');
-        card.className = 'pub-card';
-
-        const badge = document.createElement('span');
-        badge.className = 'pub-badge' + (isArXiv ? ' preprint' : '');
-        badge.textContent = badgeLabel;
-
-        const content = document.createElement('div');
-        content.className = 'pub-content';
-
-        const h3 = document.createElement('h3');
-        h3.textContent = paper.title || 'Untitled';
-
-        const authorsP = document.createElement('p');
-        authorsP.className = 'authors';
-        const authorHtml = (paper.authors || []).map(a => {
-          const raw  = a.name || '';
-          const safe = raw
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-          return AUTHOR_NAME.test(raw) ? `<strong>${safe}</strong>` : safe;
-        }).join(', ');
-        authorsP.innerHTML = authorHtml;
-
-        const venueP = document.createElement('p');
-        venueP.className = 'venue';
-        venueP.textContent = [venue || 'arXiv preprint', year].filter(Boolean).join(', ');
-
-        const links = document.createElement('div');
-        links.className = 'pub-links';
-        const arxivId = paper.externalIds && paper.externalIds.ArXiv;
-        const doi     = paper.externalIds && paper.externalIds.DOI;
-        if (arxivId) {
-          const a = document.createElement('a');
-          a.className = 'pub-link paper';
-          a.href = `https://arxiv.org/abs/${arxivId}`;
-          a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = '📄 Paper (arXiv)';
-          links.appendChild(a);
-        } else if (doi) {
-          const a = document.createElement('a');
-          a.className = 'pub-link paper';
-          a.href = `https://doi.org/${doi}`;
-          a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = '📄 Paper (DOI)';
-          links.appendChild(a);
-        }
-
-        const citeP = document.createElement('p');
-        citeP.className = 'pub-citation';
-        const count = (paper.citationCount ?? '—');
-        const countStr = typeof count === 'number' ? count.toLocaleString() : count;
-        citeP.innerHTML = `🔖 Citations: <span>${countStr}</span>`;
-
-        content.appendChild(h3);
-        content.appendChild(authorsP);
-        content.appendChild(venueP);
-        if (links.children.length) content.appendChild(links);
-        content.appendChild(citeP);
-
-        card.appendChild(badge);
-        card.appendChild(content);
-        return card;
+        a.className = 'btn btn-ghost'; a.href = SCHOLAR_URL; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = '📚 Google Scholar profile';
+        return a;
       };
 
       try {
-        const seedResp = await fetch(
-          `${S2_BASE}/paper/arXiv:2312.02638?fields=authors`
-        );
-        if (!seedResp.ok) throw new Error('seed paper fetch failed');
-        const seedData = await seedResp.json();
-
-        const authorEntry = (seedData.authors || []).find(
-          a => a.name && AUTHOR_NAME.test(a.name)
-        );
-        if (!authorEntry) throw new Error('author not found in seed paper');
-        const authorId = authorEntry.authorId;
-
-        const authorResp = await fetch(
-          `${S2_BASE}/author/${authorId}?fields=citationCount,hIndex,paperCount`
-        );
-        if (authorResp.ok) {
-          const authorData = await authorResp.json();
-          if (authorData.citationCount !== undefined)
-            setText('stat-citations', authorData.citationCount.toLocaleString());
-          if (authorData.hIndex !== undefined)
-            setText('stat-hindex', authorData.hIndex);
-          if (authorData.paperCount !== undefined)
-            setText('stat-papers', authorData.paperCount);
+        const r = await fetch('scholar-data.json', { cache: 'no-cache' });
+        if (!r.ok) throw new Error(r.status);
+        const d = await r.json();
+        const fmt = v => (v ?? null) === null ? '—' : Number(v).toLocaleString('en');
+        $('stat-citations').textContent = fmt(d.citations);
+        $('stat-hindex').textContent = fmt(d.hindex);
+        $('stat-i10index').textContent = fmt(d.i10index);
+        const pubs = Array.isArray(d.publications) ? d.publications : [];
+        $('stat-papers').textContent = pubs.length || '—';
+        if (d.fetched_at) {
+          const when = new Date(d.fetched_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+          $('scholar-source').append(` Last updated ${when}.`);
         }
+        if (!pubs.length) throw new Error('empty');
 
-        const papersResp = await fetch(
-          `${S2_BASE}/author/${authorId}/papers` +
-          `?fields=title,year,venue,citationCount,externalIds,authors&limit=1000`
-        );
-        if (!papersResp.ok) throw new Error('author papers fetch failed');
-        const papersData = await papersResp.json();
+        const byCitations = [...pubs].sort((a, b) => (b.cited_by || 0) - (a.cited_by || 0));
+        const byYear = [...pubs].sort((a, b) => (parseInt(b.year) || 0) - (parseInt(a.year) || 0) || (b.cited_by || 0) - (a.cited_by || 0));
+        const render = all => { list.replaceChildren(...(all ? byYear : byCitations.slice(0, TOP_N)).map(card)); };
+        render(false);
 
-        const papers = (papersData.data || [])
-          .filter(p => p && p.title)
-          /* Semantic Scholar uses `citationCount`; local data uses `cited_by` */
-          .sort((a, b) => (b.citationCount || 0) - (a.citationCount || 0))
-          .slice(0, 3);
-
-        if (pubList) {
-          pubList.innerHTML = '';
-          if (papers.length === 0) {
-            pubList.innerHTML =
-              '<p class="pub-loading">No publications found.</p>';
-            appendViewAll(pubList);
-          } else {
-            papers.forEach(p => pubList.appendChild(buildCard(p)));
-            appendViewAll(pubList);
-          }
+        if (pubs.length > TOP_N) {
+          const toggle = document.createElement('button');
+          toggle.className = 'btn btn-primary'; toggle.type = 'button';
+          let all = false;
+          const label = () => { toggle.textContent = all ? 'Show most cited only' : `Show all ${pubs.length} publications`; };
+          label();
+          toggle.addEventListener('click', () => {
+            all = !all; render(all); label();
+            if (!all) document.getElementById('publications').scrollIntoView();
+          });
+          actions.appendChild(toggle);
         }
-
+        actions.appendChild(scholarLink());
       } catch (err) {
-        console.warn('Scholar data: could not fetch —', err.message);
-        if (pubList) {
-          pubList.innerHTML =
-            `<p class="pub-loading">Could not load publications. ` +
-            `Please visit my <a href="${SCHOLAR_URL}" ` +
-            `style="color:var(--accent)" target="_blank" rel="noopener">Google Scholar profile</a> ` +
-            `for the full list.</p>`;
-        }
+        list.innerHTML = '';
+        const p = document.createElement('p');
+        p.className = 'pub-loading';
+        p.textContent = 'Publications could not be loaded right now. The full list is on Google Scholar.';
+        list.appendChild(p);
+        actions.replaceChildren(scholarLink());
       }
     })();
   </script>
