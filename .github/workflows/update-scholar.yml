@@ -20,6 +20,7 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -34,6 +35,10 @@ jobs:
         run: pip install "scholarly==1.7.11" "bibtexparser<2"
 
       - name: Fetch Google Scholar data
+        # Scholar sometimes throttles CI runners and scholarly retries for a long time;
+        # give up after 10 minutes and keep the existing data.
+        timeout-minutes: 10
+        continue-on-error: true
         run: python scripts/fetch_scholar.py
 
       - name: Commit updated scholar-data.json
