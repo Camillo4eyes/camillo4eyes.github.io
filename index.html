@@ -758,7 +758,15 @@
           if (!e.isIntersecting) return;
           links.forEach(a => a.classList.remove('active'));
           const a = byId[e.target.id];
-          if (a) { a.classList.add('active'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+          if (!a) return;
+          a.classList.add('active');
+          /* keep the active link visible in the horizontally scrollable mobile menu,
+             moving only the menu itself and never the page */
+          const ul = a.closest('ul');
+          if (ul.scrollWidth > ul.clientWidth) {
+            const l = a.offsetLeft - ul.offsetLeft, r = l + a.offsetWidth;
+            if (l < ul.scrollLeft || r > ul.scrollLeft + ul.clientWidth) ul.scrollLeft = Math.max(0, l - 16);
+          }
         });
       }, { rootMargin: '-45% 0px -50% 0px' });
       document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
