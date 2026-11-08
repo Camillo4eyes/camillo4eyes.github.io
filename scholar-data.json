@@ -1,73 +1,73 @@
 {
-  "fetched_at": "2026-09-07T11:51:51.901976+00:00",
+  "fetched_at": "2026-11-08T12:55:11.254653+00:00",
   "author": "Camillo Quattrocchi",
-  "citations": 90,
+  "citations": 95,
   "hindex": 5,
   "i10index": 3,
   "publications": [
     {
-      "title": "Exocentric-to-Egocentric Adaptation for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs: C. Quattrocchi et al.",
-      "year": "2026",
-      "venue": "",
-      "authors": "",
-      "cited_by": 2,
-      "scholar_url": ""
-    },
-    {
       "title": "ENIGMA-360: An Ego-Exo Dataset for Human Behavior Understanding in Industrial Scenarios",
       "year": "2026",
-      "venue": "",
+      "venue": "arXiv preprint",
       "authors": "",
-      "cited_by": 1,
-      "scholar_url": ""
+      "cited_by": 2,
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:UebtZRa9Y70C"
+    },
+    {
+      "title": "Exocentric-to-Egocentric Adaptation for Temporal Action Segmentation with Unlabeled Synchronized Video Pairs: C. Quattrocchi et al.",
+      "year": "2026",
+      "venue": "International Journal of Computer Vision",
+      "authors": "",
+      "cited_by": 2,
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:roLk4NBRz8UC"
     },
     {
       "title": "Synchronization is all you need: Exocentric-to-egocentric transfer for temporal action segmentation with unlabeled synchronized video pairs",
       "year": "2025",
-      "venue": "",
+      "venue": "European Conference on Computer Vision",
       "authors": "",
-      "cited_by": 28,
-      "scholar_url": ""
+      "cited_by": 31,
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:_FxGoFyzp5QC"
     },
     {
       "title": "Bridging Domain Gaps in Industrial Domain: From Synthetic to Real and Exocentric to Egocentric Perspectives [Colmare le lacune nel dominio industriale: dalle prospettive …",
       "year": "2025",
-      "venue": "",
+      "venue": "Università degli studi di Catania",
       "authors": "",
       "cited_by": 0,
-      "scholar_url": ""
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:LkGwnXOMwfcC"
     },
     {
       "title": "Put Your PPE on: A Tool for Synthetic Data Generation and Related Benchmark in Construction Site Scenarios.",
       "year": "2023",
-      "venue": "",
+      "venue": "VISIGRAPP (4: VISAPP)",
       "authors": "",
       "cited_by": 14,
-      "scholar_url": ""
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:qjMakFHDy7sC"
     },
     {
       "title": "Panoptic segmentation in industrial environments using synthetic and real data",
       "year": "2022",
-      "venue": "",
+      "venue": "International Conference on Image Analysis and Processing",
       "authors": "",
       "cited_by": 7,
-      "scholar_url": ""
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:9yKSN-GCB0IC"
     },
     {
       "title": "Challenges in automatic Munsell color profiling for cultural heritage",
       "year": "2020",
-      "venue": "",
+      "venue": "Pattern Recognition Letters 131",
       "authors": "",
-      "cited_by": 32,
-      "scholar_url": ""
+      "cited_by": 33,
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:u-x6o8ySG0sC"
     },
     {
       "title": "ARCA 2.0: Automatic Recognition of Color for Archaeology through a Web-Application",
       "year": "2018",
-      "venue": "",
+      "venue": "2018 Metrology for Archaeology and Cultural Heritage (MetroArchaeo)",
       "authors": "",
       "cited_by": 6,
-      "scholar_url": ""
+      "scholar_url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=z1LNVfMAAAAJ:u5HHmVD_uO8C"
     }
   ]
 }
